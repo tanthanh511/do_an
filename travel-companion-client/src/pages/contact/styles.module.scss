@@ -1,0 +1,88 @@
+@import "../../global/font.module";
+.main {
+  .container {
+    .introduction_banner {
+      padding: 65px 55px;
+      height: 465px;
+      background-color: #eeebeb;
+      display: flex;
+      justify-content: space-evenly;
+
+      .content_banner {
+        .about_us {
+          padding: 52px 0 42px 0;
+          display: flex;
+          justify-content: center;
+          .text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #66afff;
+            opacity: 60%;
+            width: 230px;
+            height: 51px;
+            border-radius: 40px;
+            h3 {
+              color: #000;
+              opacity: 100%;
+            }
+          }
+        }
+        h2 {
+          padding-bottom: 20px;
+          font-size: 30px;
+          font-weight: 500;
+        }
+      }
+    }
+    .card {
+      display: flex;
+      height: 387px;
+      justify-content: center;
+      margin: 21px 0 21px 0;
+      .card_infomation {
+        border: 1px solid #000;
+        padding: 52px;
+        width: 650px;
+        .contact_us {
+          padding-bottom: 26px;
+          display: flex;
+          justify-content: center;
+          .contact_text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #66afff;
+            opacity: 60%;
+            width: 230px;
+            height: 51px;
+            border-radius: 40px;
+            h3 {
+              color: #000;
+              opacity: 100%;
+            }
+          }
+        }
+        p {
+          padding-left: 19px;
+        }
+        .phone {
+          display: flex;
+          padding: 0 0 19px 20px;
+        }
+        .email {
+          display: flex;
+          padding: 0 0 19px 20px;
+        }
+        .address {
+          display: flex;
+         padding: 0 0 19px 20px;
+        }
+        .text_thankyou {
+          text-align: center;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}
