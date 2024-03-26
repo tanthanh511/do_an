@@ -1,0 +1,35 @@
+.main {
+  .container {
+    .box_filter {
+      display: flex;
+      justify-content: space-around;
+      background-color: #dadada;
+      padding: 20px 0 20px 0;
+      select {
+        height: 60px;
+        width: 361px;
+        background-color: #aed2f9;
+        color: #fff;
+        padding: 0 27px 0 27px;
+        font-size: 20px;
+        border: 0 solid #aed2f9;
+        border-radius: 8px;
+        option{
+            background-color: #fff;
+            color: #000;
+        }
+      }
+      .filter_category {
+      }
+      .filter_date {
+      }
+      .search_blog {
+      }
+    }
+
+    .card_content{
+        padding: 50px;
+    }
+
+  }
+}

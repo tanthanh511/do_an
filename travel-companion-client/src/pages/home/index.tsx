@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useEffect } from "react";
 import styles from "./styles.module.scss";
 import banner from "../../assets/banner.svg";
 import location from "../../assets/icon_network_social/location 1.svg";
@@ -6,14 +6,29 @@ import weather from "../../assets/icon_network_social/weather 1.svg";
 import newPaper from "../../assets/icon_network_social/newspaper 1.svg";
 import dinner from "../../assets/icon_network_social/dinner 1.svg";
 import Subscribe from "../../components/subscribe";
-//import {addressData} from "./address.constant"
+import dl from "../../assets/test/dl.svg"
+import Card from "../../components/card";
+// import { addressData } from "./address.constant";
 
-// type addressType = {
-//   name:string;
-//   decription:string;
+export interface  AddressType {
+  id: number;
+  title: string;
+  body: string;
+};
 
-// };
 export default function Home() {
+  const [posts, setPosts] = useState([]);
+  const [filterPosts, setFilterPosts] = useState([]);
+  
+  useEffect(()=>{
+    fetch("https://jsonplaceholder.typicode.com/posts")
+    .then((response) => response.json())
+    .then(posts =>{setPosts(posts)})
+    const filter = posts.filter((post: AddressType)=> post.id <9)
+    setFilterPosts(filter) 
+  },[posts]);
+
+  
   return (
     <div className={styles.main}>
       <div className={styles.container}>
@@ -85,18 +100,10 @@ export default function Home() {
           <span className={styles.line_text}>Recommended Destinations</span>
           <hr className={styles.horizontal_line} />
         </div>
-        <div className={styles.card_info}>
-          <div className={styles.cart_item_info}>
-            {/* let filters = addressData.map((a:addressType)=>{
-
-            <img src="" alt="" />
-            <h2></h2>
-            <span></span>
-          }) */}
-          </div>
-        </div>
+        <Card data={filterPosts}/>
         <Subscribe />
       </div>
     </div>
+
   );
 }

@@ -1,0 +1,57 @@
+.main {
+    padding: 70px 125px;
+    color: #fff;
+    .container {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      .img_register {
+      }
+      .register_form {
+        position: absolute;
+        top: 65px;
+        bottom: 65px;
+        .title {
+          font-size: 40px;
+          font-weight: 700;
+          padding-bottom: 53px;
+          color: #fff;
+          opacity: 0.4;
+        }
+        input {
+          width: 578px;
+          display: block;
+          height: 50px;
+          border-radius: 10px;
+          margin-top: 13px;
+        }
+        label {
+          font-size: 30px;
+          font-weight: 500;
+       
+        }
+        .btn_register{
+          text-align: center;
+          padding: 26px 0 26px 0 ;
+            .submit {
+              height: 60px ;
+              width: 200px;
+              border-radius:30px ;
+              border: 0 solid #fff;
+              background-color: #3CA1FF; 
+              font-size: 30px;
+              font-weight: 600;
+            }
+        }
+  
+        p{
+          text-align: center;
+        }
+        h2{
+          margin-top:12px ;
+          text-align: center;
+        }
+      }
+    }
+  }
+  

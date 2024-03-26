@@ -10,7 +10,9 @@ export default function Contact() {
   return (
     <div className={styles.main}>
       <div className={styles.container}>
-        <Search />
+        <div className={styles.search}>
+          <Search />
+        </div>
         <div className={styles.introduction_banner}>
           <div className={styles.content_banner}>
             <div className={styles.about_us}>
@@ -58,7 +60,7 @@ export default function Contact() {
             </div>
           </div>
         </div>
-        < Subscribe/>
+        <Subscribe />
       </div>
     </div>
   );

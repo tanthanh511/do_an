@@ -3,4 +3,6 @@ export enum ROUTE_NAME {
   BLOG = "/blog",
   PLACE = "/place",
   CONTACT = "/contact",
+  LOGIN = "/login",
+  REGISTER = "/register"
 }

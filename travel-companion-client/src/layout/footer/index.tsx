@@ -1,5 +1,3 @@
-// @flow
-import * as React from "react";
 import styles from "./styles.module.scss";
 import { Link } from "react-router-dom";
 import fb from "../../assets/icon_network_social/facebook.svg";

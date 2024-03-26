@@ -1,6 +1,12 @@
 @import "../../global/font.module";
 .main {
   .container {
+    .search{
+      padding: 34px 0 59px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     .introduction_banner {
       padding: 65px 55px;
       height: 465px;

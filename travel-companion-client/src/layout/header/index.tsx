@@ -1,10 +1,13 @@
 import styles from "./styles.module.scss";
 import { Menus } from "./header.constants";
 import { Link } from "react-router-dom";
-
+import { ROUTE_NAME } from "../../helpers/Route";
+import { useTranslation } from "react-i18next";
+import LanguageSelector from "../../components/language/languageSelector";
 export interface Props {}
 
 export default function Header(props: Props) {
+  const { t } = useTranslation();
   return (
     // <BrowserRouter>
     <div className={styles.main}>
@@ -29,12 +32,16 @@ export default function Header(props: Props) {
             </li>
           ))}
         </div>
+       
         <div className={styles.account_user_header}>
+        <div className={styles.language}>
+          <LanguageSelector />
+        </div>
           <div className={styles.login_header}>
-            <Link to={"./"}>Login</Link>{" "}
+            <Link to={ROUTE_NAME.LOGIN}>{t("login")}</Link>
           </div>
           <div className={styles.register_header}>
-            <Link to={"./"}>Register</Link>
+            <Link to={ROUTE_NAME.REGISTER}>{t("register")}</Link>
           </div>
         </div>
       </div>
