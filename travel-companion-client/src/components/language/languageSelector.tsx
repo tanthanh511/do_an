@@ -10,7 +10,6 @@ const LanguageSelector = () => {
   const { i18n } = useTranslation();
   const changeLanguage = (lng: any) => {
     i18n.changeLanguage(lng);
-    console.log(lng);
   };
 
   return (

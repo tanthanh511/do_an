@@ -6,9 +6,8 @@ import weather from "../../assets/icon_network_social/weather 1.svg";
 import newPaper from "../../assets/icon_network_social/newspaper 1.svg";
 import dinner from "../../assets/icon_network_social/dinner 1.svg";
 import Subscribe from "../../components/subscribe";
-import dl from "../../assets/test/dl.svg"
 import Card from "../../components/card";
-// import { addressData } from "./address.constant";
+ import { addressData } from "./address.constant";
 
 export interface  AddressType {
   id: number;
@@ -16,17 +15,30 @@ export interface  AddressType {
   body: string;
 };
 
+export interface LocationType  {
+  id: number;
+  title:string ;
+  description: string ;
+};
+
 export default function Home() {
   const [posts, setPosts] = useState([]);
   const [filterPosts, setFilterPosts] = useState([]);
+  const [Place, setPlace] = useState(addressData)
+
+  // useEffect(()=>{
+  //   const getPlace = addressData.map((place : LocationType)=>place)
+  //   setPlace(getPlace);
+    
+  // },[addressData])
   
-  useEffect(()=>{
-    fetch("https://jsonplaceholder.typicode.com/posts")
-    .then((response) => response.json())
-    .then(posts =>{setPosts(posts)})
-    const filter = posts.filter((post: AddressType)=> post.id <9)
-    setFilterPosts(filter) 
-  },[posts]);
+  // useEffect(()=>{
+  //   fetch("https://jsonplaceholder.typicode.com/posts")
+  //   .then((response) => response.json())
+  //   .then(posts =>{setPosts(posts)})
+  //   const filter = posts.filter((post: AddressType)=> post.id <9)
+  //   setFilterPosts(filter) 
+  // },[posts]);
 
   
   return (
@@ -100,7 +112,9 @@ export default function Home() {
           <span className={styles.line_text}>Recommended Destinations</span>
           <hr className={styles.horizontal_line} />
         </div>
-        <Card data={filterPosts}/>
+        {/* <Card data={filterPosts}/> */}
+        <Card data={Place}/>
+
         <Subscribe />
       </div>
     </div>

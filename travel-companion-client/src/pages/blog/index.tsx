@@ -2,32 +2,37 @@ import { useEffect, useState } from "react";
 import Search from "../../components/search";
 import styles from "./styles.module.scss";
 import Card from "../../components/card";
+import { postsData } from "./posts.constant";
 
-export interface AddressType {
+export interface PostsType {
   id: number;
   title: string;
-  body: string;
+  description: string;
+  date: string;
 }
 
 export default function Blog() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(postsData);
   const [selected, setSelected] = useState("");
-  const [selectValue, setSelectValue] = useState([]);
+  const [selectValue, setSelectValue] = useState(postsData);
+
+
+  // get api
+  //const [selectValue, setSelectValue] = useState([]);
+  // useEffect(() => {
+  //   fetch("https://jsonplaceholder.typicode.com/posts")
+  //     .then((res) => res.json())
+  //     .then((optionPosts) => {
+  //       setSelectValue(optionPosts);
+  //       setPosts(optionPosts);
+  //     });
+  // }, []);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
-      .then((res) => res.json())
-      .then((optionPosts) => {
-        setSelectValue(optionPosts);
-        setPosts(optionPosts);
-      });
+    const posts = postsData;
+    setSelectValue(posts);
+    setPosts(posts);
   }, []);
-
-  // useEffect(() => {
-  //   setPosts(
-  //     selectValue.filter((post: AddressType) => post.title.includes(selected))
-  //   );
-  // }, [selected]);
 
   return (
     <div className={styles.main}>
@@ -38,17 +43,18 @@ export default function Blog() {
               value={selected}
               // onChange={(e) => {setSelected(e.target.value)}}
               onChange={(e) => {
-                setSelected(e.target.value)
+                setSelected(e.target.value);
                 setPosts(
-                  selectValue.filter((post: AddressType) => post.title.includes(e.target.value))
+                  selectValue.filter((post: PostsType) =>
+                    post.title.includes(e.target.value)
+                  )
                 );
               }}
-
             >
               <option key={-1} value="">
                 Reset filters
               </option>
-              {selectValue.map((post: AddressType) => (
+              {selectValue.map((post: PostsType) => (
                 <option key={post.id} value={post.title}>
                   {post.title}
                 </option>
@@ -56,20 +62,21 @@ export default function Blog() {
             </select>
           </div>
           <div className={styles.filter_date}>
-            <select value="chon">
+            {/* <select value="chon">
               <option value="">date time</option>
               <option value="">2</option>
               <option value="">3</option>
-            </select>
+            </select> */}
           </div>
           <div className={styles.search_blog}>
-            <Search/>
+            <Search />
           </div>
         </div>
 
         <div className={styles.card_content}>
           <Card data={posts} />
         </div>
+        
       </div>
     </div>
   );
