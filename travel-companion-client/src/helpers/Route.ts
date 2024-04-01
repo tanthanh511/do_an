@@ -4,5 +4,6 @@ export enum ROUTE_NAME {
   PLACE = "/place",
   CONTACT = "/contact",
   LOGIN = "/login",
-  REGISTER = "/register"
+  REGISTER = "/register",
+  ADMIN = "/admin"
 }

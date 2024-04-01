@@ -1,9 +1,11 @@
 import styles from "./styles.module.scss";
 import { useTranslation } from "react-i18next";
+import vn from "../../assets/language/viet-nam.png";
+import my from "../../assets/language/my.png"
 
 const languages = [
   { code: "en", lang: "EN" },
-  { code: "vi", lang: "VN" },
+  { code: "vi", lang:"VN" },
 ];
 
 const LanguageSelector = () => {

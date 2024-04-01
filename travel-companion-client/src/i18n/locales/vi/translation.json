@@ -1,5 +1,14 @@
 {
-    "home": "Trang chu",
-    "login":"Đăng nhập",
-    "register":"Đăng kí"
+  "home": "Trang chu",
+  "place": "Địa điểm",
+  "contact": "Liên hệ",
+  "blog": "Blog",
+  "login": "Đăng nhập",
+  "register": "Đăng kí",
+  "discover": "Liên kết",
+  "quicksLink": "Liên kết nhanh",
+  "phone": "SĐT",
+  "address": "Địa chỉ",
+  "DLCity": "Thành phố Đà Lạt",
+  "logout":"Đăng xuất"
 }

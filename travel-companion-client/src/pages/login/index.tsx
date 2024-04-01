@@ -4,11 +4,12 @@ import register from "../../assets/register.svg";
 import { useEffect, useState } from "react";
 import hidden from "../../assets/loginAndRegister/eye.svg";
 import eyeSlash from "../../assets/loginAndRegister/eye-slash.svg";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import { loginApi } from "../../services/user_service";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
-import { fetchAllUser, loginApi } from "../../services/user_service";
-import axios from "axios";
-import { Alert } from "antd";
+import ReactLoading from "react-loading";
 //import ReactPaginate from "react-paginate";
 
 export default function Login() {
@@ -16,7 +17,8 @@ export default function Login() {
   const [totalPages, setTotalPages] = useState(0);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   // // phân trang
   // const [userName, setUserName] = useState("");
   // const [listUser, setListUser] = useState([]);
@@ -40,36 +42,41 @@ export default function Login() {
   //   getUsers(e.selected+1)
   // };
 
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    if (token) {
+      navigate("/");
+    }
+  }, []);
   const handleLogin = async () => {
     if (!email || !password) {
       toast.error("Email/Password is requiered!");
       return;
     }
-    let res = await loginApi(email, password);
-    console.log("check" + res);
+    setLoading(true);
+    const res = await loginApi(email, password);
+
     if (res && res.token) {
       localStorage.setItem("token", res.token);
+      navigate("/");
+    } else {
+      if (res && res.response?.status === 400) {
+        toast.error(res.response?.data.error);
+      }
     }
-
-    // axios
-    //   .post("https://reqres.in/api/login", {
-    //     email, password
-    //  email: "eve.holt@reqres.in",
-    //  password: "cityslicka",
-    // })
-    // .then(() => alert("success"))
-    // .catch((error) => alert(error));
+    setLoading(false);
   };
 
   return (
     <div className={styles.main}>
       <div className={styles.container}>
+        {/* <ToastContainer /> */}
         <img className={styles.img_login} src={register} alt="" />
         <div className={styles.login_form}>
           <h2 className={styles.title}>Welcome to Travel Companion</h2>
 
           <div className={styles.username}>
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">Username (eve.holt@reqres.in)</label>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -100,11 +107,20 @@ export default function Login() {
           <div className={styles.btn_login}>
             <button
               className={email && password ? styles.submit : styles.no_submit}
-              // disabled={email && password ? false : true}
+              disabled={email && password ? false : true}
               // type="submit"
               onClick={handleLogin}
             >
               Login
+              {loading && (
+                <ReactLoading
+                  className={styles.loading_spin}
+                  type={"spin"}
+                  color={"#000"}
+                  height={24}
+                  width={24}
+                />
+              )}
             </button>
           </div>
 

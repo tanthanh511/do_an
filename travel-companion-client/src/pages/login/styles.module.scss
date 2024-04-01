@@ -28,9 +28,8 @@
       label {
         font-size: 30px;
         font-weight: 500;
-     
       }
-      input{
+      input {
         padding: 10px;
         font-size: 20px;
         border: 0 solid #fff;
@@ -38,63 +37,68 @@
       .username {
       }
       .password {
-        .box_password{
+        .box_password {
           position: relative;
-        
-          .eye{
+
+          .eye {
             position: absolute;
             top: 12px;
             right: 22px;
             cursor: pointer;
           }
-          .eye_slash{
+          .eye_slash {
             position: absolute;
             top: 12px;
             right: 22px;
             cursor: pointer;
-            
           }
         }
       }
 
-      .btn_login{
+      .btn_login {
         text-align: center;
-        padding: 26px 0 26px 0 ;
-          .submit {
-            height: 60px ;
-            width: 200px;
-            border-radius:30px ;
-            border: 0 solid #fff;
-            background-color: #3CA1FF; 
-            font-size: 30px;
-            font-weight: 600;
-          }
-          .no_submit{
-            height: 60px ;
-            width: 200px;
-            border-radius:30px ;
-            border: 0 solid #fff; 
-            font-size: 30px;
-            font-weight: 600;
-            background-color: #fff;
-          }
-
+        padding: 26px 0 26px 0;
+        position: relative;
+        .submit {
+          height: 60px;
+          width: 200px;
+          border-radius: 30px;
+          border: 0 solid #fff;
+          background-color: #3ca1ff;
+          font-size: 30px;
+          font-weight: 600;
+        }
+        .no_submit {
+          height: 60px;
+          width: 200px;
+          border-radius: 30px;
+          border: 0 solid #fff;
+          font-size: 30px;
+          font-weight: 600;
+          background-color: #fff;
+        }
+        .loading_spin {
+          position: absolute;
+          top: 40px;
+          left: 213px;
+        }
       }
 
-      button[disabled = disabled], button:disabled{
+      button[disabled="disabled"],
+      button:disabled {
         cursor: not-allowed;
       }
 
-      p{
+      p {
         text-align: center;
         font-size: 20px;
-        a{
+        a {
           color: bisque;
           box-shadow: 0 3px rgb(105, 233, 249);
         }
       }
-      h2{
-        margin-top:12px ;
+      h2 {
+        margin-top: 12px;
         text-align: center;
       }
     }

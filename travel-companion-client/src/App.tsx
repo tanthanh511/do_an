@@ -9,18 +9,18 @@ import Header from "./layout/header";
 import Footer from "./layout/footer";
 import Login from "./pages/login";
 import Register from "./pages/register";
-
+import { Admin } from "./pages/admin";
 
 function App() {
   return (
     <>
-      
       <Header />
       <Routes>
         <Route path={ROUTE_NAME.HOME} element={<Home />} />
         <Route path={ROUTE_NAME.PLACE} element={<Place />} />
         <Route path={ROUTE_NAME.BLOG} element={<Blog />} />
         <Route path={ROUTE_NAME.CONTACT} element={<Contact />} />
+        <Route path={ROUTE_NAME.ADMIN} element={<Admin />} />
         <Route path={ROUTE_NAME.LOGIN} element={<Login />} />
         <Route path={ROUTE_NAME.REGISTER} element={<Register />} />
       </Routes>

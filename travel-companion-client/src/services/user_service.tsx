@@ -9,8 +9,6 @@ type dataType=  {
     token: string 
 }
 
-    
-
 const fetchAllUser = (page:number )=> {
     return axios.get<dataType, any>(`api/users?page=${page}`)
 }

@@ -1,6 +1,14 @@
 {
-    "home": "home",
-    "login":"Login",
-    "register":"register"
+  "home": "Home",
+  "place": "Place",
+  "contact": "Contact",
+  "blog": "Blog",
+  "login": "Login",
+  "register": "Register",
+  "discover": "Discover",
+  "quicksLink": "Quicks Link",
+  "phone": "Phone",
+  "address": "Address",
+  "DLCity": "DaLat City",
+  "logout": "Logout"
 }
-    
