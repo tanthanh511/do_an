@@ -1,5 +1,5 @@
 {
-  "home": "Trang chu",
+  "home": "Trang chủ",
   "place": "Địa điểm",
   "contact": "Liên hệ",
   "blog": "Blog",
@@ -10,5 +10,6 @@
   "phone": "SĐT",
   "address": "Địa chỉ",
   "DLCity": "Thành phố Đà Lạt",
-  "logout":"Đăng xuất"
+  "logout":"Đăng xuất",
+  "setting": "Cài đặt"
 }

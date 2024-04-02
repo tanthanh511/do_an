@@ -1,11 +1,11 @@
 import styles from "./styles.module.scss";
 import { useTranslation } from "react-i18next";
 import vn from "../../assets/language/viet-nam.png";
-import my from "../../assets/language/my.png"
+import en from "../../assets/language/my.png";
 
 const languages = [
-  { code: "en", lang: "EN" },
-  { code: "vi", lang:"VN" },
+  { code: "en", lang: en },
+  { code: "vi", lang: vn },
 ];
 
 const LanguageSelector = () => {
@@ -22,9 +22,9 @@ const LanguageSelector = () => {
             type="submit"
             className={lng.code === i18n.language ? "selected" : ""}
             key={lng.code}
-            onClick={() => changeLanguage(lng.code)} 
+            onClick={() => changeLanguage(lng.code)}
           >
-            {lng.lang}
+            <img src={lng.lang} alt="" className={styles.icon_language} />
           </button>
         );
       })}

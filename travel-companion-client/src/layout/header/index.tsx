@@ -5,13 +5,18 @@ import { ROUTE_NAME } from "../../helpers/Route";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "../../components/language/languageSelector";
 import { ToastContainer, toast } from "react-toastify";
+import { UserContext } from "../../context/user-context";
+import { useContext } from "react";
 export interface Props {}
 
 export default function Header(props: Props) {
   const { t } = useTranslation();
+  const { logout, user } = useContext(UserContext)!;
+
   const navigate = useNavigate();
+
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    logout();
     navigate("/");
     toast.success("logout success");
   };
@@ -33,26 +38,45 @@ export default function Header(props: Props) {
             </div>
           </div>
         </div>
+
         <div className={styles.navbar_header}>
+          {/* <li>
+            <Link to={ROUTE_NAME.HOME}>{t("home")}</Link>
+          </li>
+          <li>
+            <Link to={ROUTE_NAME.PLACE}>{t("place")}</Link>
+          </li>
+          <li>
+            <Link to={ROUTE_NAME.BLOG}>{t("blog")}</Link>
+          </li>
+          <li>
+            <Link to={ROUTE_NAME.CONTACT}>{t("contact")}</Link>
+          </li> */}
           {Menus.map((menu, index) => (
             <li key={index}>
-              <Link to={menu.href}>{menu.name}</Link>
+              <Link to={menu.href}>{t(menu.name)}</Link>
             </li>
           ))}
-          <li className={styles.dropdown_nav}>
-            <a className={styles.dropbtn}>Admin</a>
-            <ul className={styles.sub_menu}>
-              <li>
-                <a href="">User</a>
+          {user && user.auth === true ? (
+            <>
+              <li className={styles.dropdown_nav}>
+                <a className={styles.dropbtn}>Admin</a>
+                <ul className={styles.sub_menu}>
+                  <li>
+                    <Link to={ROUTE_NAME.BLOGADMIN}>Blog</Link>
+                  </li>
+                  <li>
+                    <Link to={ROUTE_NAME.USERADMIN}>User</Link>
+                  </li>
+                  <li>
+                    <a href="">Blog</a>
+                  </li>
+                </ul>
               </li>
-              <li>
-                <a href="">Place</a>
-              </li>
-              <li>
-                <a href="">Blog</a>
-              </li>
-            </ul>
-          </li>
+            </>
+          ) : (
+            ""
+          )}
         </div>
 
         <div className={styles.account_user_header}>
@@ -60,28 +84,27 @@ export default function Header(props: Props) {
             <LanguageSelector />
           </div>
           <li className={styles.dropdown_setting}>
-            <a >Setting</a>
+            <a>{t("setting")}</a>
             <ul className={styles.sub_menu_setting}>
-              <li>
-              <Link to={ROUTE_NAME.LOGIN}>{t("login")}</Link>
-                {/* <div className={styles.login_header}>
-                 
-                </div> */}
-              </li>
-              <li>
-              <Link to={ROUTE_NAME.LOGIN} onClick={handleLogout}>
-                    {t("logout")}
-                  </Link>
-                {/* <div className={styles.register_header}>
-                  
-                </div> */}
-              </li>
-              <li>
-              <Link to={ROUTE_NAME.REGISTER}>{t("register")}</Link>
-
-                {/* <div className={styles.register_header}>
-                </div> */}
-              </li>
+              {user && user.auth === true ? (
+                <div>
+                  <li>{user.email}</li>
+                  <li>
+                    <Link to={ROUTE_NAME.HOME} onClick={handleLogout}>
+                      {t("logout")}
+                    </Link>
+                  </li>
+                </div>
+              ) : (
+                <div>
+                  <li>
+                    <Link to={ROUTE_NAME.LOGIN}>{t("login")}</Link>
+                  </li>
+                  <li>
+                    <Link to={ROUTE_NAME.REGISTER}>{t("register")}</Link>
+                  </li>
+                </div>
+              )}
             </ul>
           </li>
         </div>

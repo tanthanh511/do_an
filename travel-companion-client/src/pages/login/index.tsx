@@ -8,17 +8,21 @@ import { ToastContainer, toast } from "react-toastify";
 import { loginApi } from "../../services/user_service";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/user-context";
+import { useContext } from "react";
 
 import ReactLoading from "react-loading";
 //import ReactPaginate from "react-paginate";
 
 export default function Login() {
+  const { loginContext } = useContext(UserContext)!;
   const [email, setEmail] = useState("");
   const [totalPages, setTotalPages] = useState(0);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
   // // phân trang
   // const [userName, setUserName] = useState("");
   // const [listUser, setListUser] = useState([]);
@@ -42,22 +46,18 @@ export default function Login() {
   //   getUsers(e.selected+1)
   // };
 
-  useEffect(() => {
-    let token = localStorage.getItem("token");
-    if (token) {
-      navigate("/");
-    }
-  }, []);
   const handleLogin = async () => {
     if (!email || !password) {
       toast.error("Email/Password is requiered!");
       return;
     }
+
     setLoading(true);
     const res = await loginApi(email, password);
 
     if (res && res.token) {
-      localStorage.setItem("token", res.token);
+      loginContext(email, res.token);
+      //localStorage.setItem("token", res.token);
       navigate("/");
     } else {
       if (res && res.response?.status === 400) {
@@ -65,6 +65,14 @@ export default function Login() {
       }
     }
     setLoading(false);
+  };
+
+  const handlePressEnter = async (e: any) => {
+    console.log(e);
+
+    if (e && e.key === "Enter") {
+      await handleLogin();
+    }
   };
 
   return (
@@ -94,6 +102,7 @@ export default function Login() {
                 type={showPassword === true ? "text" : "password"}
                 id="password"
                 required
+                onKeyDown={(e) => handlePressEnter(e)}
               />
 
               <img

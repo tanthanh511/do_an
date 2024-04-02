@@ -5,5 +5,7 @@ export enum ROUTE_NAME {
   CONTACT = "/contact",
   LOGIN = "/login",
   REGISTER = "/register",
-  ADMIN = "/admin"
+  ADMIN = "/admin",
+  USERADMIN= "/user-admin",
+  BLOGADMIN= "/blog-admin"
 }

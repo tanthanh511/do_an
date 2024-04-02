@@ -10,5 +10,6 @@
   "phone": "Phone",
   "address": "Address",
   "DLCity": "DaLat City",
-  "logout": "Logout"
+  "logout": "Logout",
+  "setting": "Setting"
 }
