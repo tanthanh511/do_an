@@ -11,7 +11,7 @@ export default function Contact() {
     <div className={styles.main}>
       <div className={styles.container}>
         <div className={styles.search}>
-          <Search />
+          {/* <Search /> */}
         </div>
         <div className={styles.introduction_banner}>
           <div className={styles.content_banner}>

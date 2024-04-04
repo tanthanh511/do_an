@@ -1,0 +1,126 @@
+.container{
+ padding: 44px;
+    .post_item{
+      background: linear-gradient(#f2f8ff, #e6f0fd, #cee3fc, #cce4ff, #99c8f9);
+        height: auto;
+        padding-bottom:1px ;
+        .title{
+            text-align: center;
+            padding: 50px 124px;
+            font-size: 40px;
+
+        }
+        .box_img_blog{
+            padding: 0 126px 0 126px;
+            display: grid;
+            grid-template-columns: (repeat(3, 1fr));
+            text-align: center;
+            .first_img {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                border: 10px;
+                img{
+                    width: 300px;
+                    height: 300px;
+                }
+
+            }
+            .second_img {
+                border: 10px;
+               img{
+
+                   width: 436px;
+                  height: 530px; 
+               }
+            }
+            .third_img{
+                border: 10px;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                img{
+                    width: 300px;
+                    height: 300px;
+                }
+            }
+        }
+        .box_content_blog{
+            background-color: #fff;
+            margin: 61px;
+            padding: 20px;
+         
+            .date_time{
+                text-align: center; 
+                font-size: 30px;
+
+            }
+            .author_post{
+                font-size: 30px;
+                text-align: center; 
+                padding-bottom: 10px;
+            }
+            .content_post{
+               font-size: 25px;
+                text-align: justify;
+            }
+        }
+    }
+  
+    .last_new{
+      padding-top:50px ;
+      .title_latestnew{
+        text-align: center;
+        padding-bottom: 20px;
+      }
+        .card_content {
+           
+            .card_info {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              row-gap: 70px;
+              //display: flex;
+              .card_item {
+                display: flex;
+                justify-content: center;
+                .card_item_info {
+                  background: linear-gradient(
+                    #f2f8ff,
+                    #e6f0fd,
+                    #cee3fc,
+                    #cce4ff,
+                    #99c8f9
+                  );
+      
+                  width: 400px;
+                  //border: 1px solid #000;
+                  border-radius: 20px;
+                  height: 500px;
+                  padding: 26px;
+      
+                  .card_item_img {
+                    text-align: center;
+                  }
+                  .card_item_content {
+                    h1 {
+                      text-align: center;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 1;
+                      -webkit-box-orient: vertical;
+                      overflow: hidden;
+                      //padding:21px 0 21px 0  ;
+                    }
+                    p {
+                      display: -webkit-box;
+                      -webkit-line-clamp: 3;
+                      -webkit-box-orient: vertical;
+                      overflow: hidden;
+                      text-align: justify;
+                    }
+                  }
+                }
+              }
+            }
+          }
+    }
+}

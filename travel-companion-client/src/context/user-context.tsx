@@ -1,8 +1,5 @@
 import React, { ReactNode, createContext, useEffect, useState } from "react";
 
-// @function  UserProvider
-// Create function to provide UserContext
-
 interface User {
   email: string;
   auth: boolean;
@@ -14,7 +11,6 @@ interface UserContextType {
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
-// const UserContext = createContext({ name: '', auth: false });
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState({ email: "", auth: false });
@@ -36,12 +32,11 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
       auth: false,
     }));
   };
-  
+
   useEffect(() => {
     // Xóa token khi component unmount
     return () => {
       localStorage.removeItem("token");
-     
     };
   }, []);
 
@@ -50,7 +45,6 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </UserContext.Provider>
   );
-
 };
 
 export { UserContext, UserProvider };

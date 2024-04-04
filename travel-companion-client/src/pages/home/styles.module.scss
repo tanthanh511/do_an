@@ -113,6 +113,54 @@
         width: 100%;
       }
     }
+
+    .card_info {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      row-gap: 70px;
+      padding-bottom: 90px;
+      //display: flex;
+      .card_item {
+        display: flex;
+        justify-content: center;
+        .card_item_info {
+          background: linear-gradient(
+            #f2f8ff,
+            #e6f0fd,
+            #cee3fc,
+            #cce4ff,
+            #99c8f9
+          );
+
+          width: 400px;
+          //border: 1px solid #000;
+          border-radius: 20px;
+          height: 500px;
+          padding: 26px;
+
+          .card_item_img {
+            text-align: center;
+          }
+          .card_item_content {
+            h1 {
+              text-align: center;
+              display: -webkit-box;
+              -webkit-line-clamp: 1;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+              //padding:21px 0 21px 0  ;
+            }
+            p {
+              display: -webkit-box;
+              -webkit-line-clamp: 3;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+              text-align: justify;
+            }
+          }
+        }
+      }
+    }
     
   }
 }

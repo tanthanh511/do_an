@@ -6,41 +6,45 @@ import weather from "../../assets/icon_network_social/weather 1.svg";
 import newPaper from "../../assets/icon_network_social/newspaper 1.svg";
 import dinner from "../../assets/icon_network_social/dinner 1.svg";
 import Subscribe from "../../components/subscribe";
-import Card from "../../components/card";
- import { addressData } from "./address.constant";
+import { addressData } from "./address.constant";
+import { Link } from "react-router-dom";
+import dl from "../../assets/test/dl.svg";
 
-export interface  AddressType {
+export interface AddressType {
   id: number;
   title: string;
-  body: string;
-};
-
-export interface LocationType  {
-  id: number;
-  title:string ;
-  description: string ;
-};
+  description: string;
+  contact: string;
+}
 
 export default function Home() {
-  const [posts, setPosts] = useState([]);
-  const [filterPosts, setFilterPosts] = useState([]);
-  const [Place, setPlace] = useState(addressData)
+  const [Place, setPlace] = useState(addressData);
+  const [search, setSearch] = useState("");
+  console.log(search);
 
   // useEffect(()=>{
   //   const getPlace = addressData.map((place : LocationType)=>place)
   //   setPlace(getPlace);
-    
+
   // },[addressData])
-  
+
   // useEffect(()=>{
   //   fetch("https://jsonplaceholder.typicode.com/posts")
   //   .then((response) => response.json())
   //   .then(posts =>{setPosts(posts)})
   //   const filter = posts.filter((post: AddressType)=> post.id <9)
-  //   setFilterPosts(filter) 
+  //   setFilterPosts(filter)
   // },[posts]);
 
-  
+  const handleSearch = () => {
+    const filter = addressData.filter((item) => {
+      return search === ""
+        ? addressData
+        : item.title.toLowerCase().includes(search.toLowerCase());
+    });
+    setPlace(filter);
+  };
+
   return (
     <div className={styles.main}>
       <div className={styles.container}>
@@ -48,7 +52,6 @@ export default function Home() {
           <div className={styles.banner_box}>
             <div className={styles.banner}>
               <img src={banner} alt="" />
-
               <div className={styles.content_banner}>
                 <div className={styles.title_banner}>
                   <label htmlFor="">Travel to Explore</label>
@@ -66,13 +69,29 @@ export default function Home() {
                     type="text"
                     className={styles.ip_search}
                     placeholder="Search your destination"
+                    value={search}
+                    onChange={(e) => {
+                      setSearch(e.target.value.trim());
+                      setPlace(
+                        search === ""
+                          ? addressData
+                          : addressData.filter((item) => {
+                              return item.title
+                                .toLowerCase()
+                                .includes(search.toLowerCase());
+                            })
+                      );
+                    }}
                   />
-                  <button className={styles.btn_search}>Search</button>
+                  <button className={styles.btn_search} onClick={handleSearch}>
+                    Search
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
         <div className={styles.card}>
           <div className={styles.card_item}>
             <div>
@@ -89,14 +108,15 @@ export default function Home() {
             <h3>Weather Forecast</h3>
             <p>Get the latest weather information</p>
           </div>
-
-          <div className={styles.card_item}>
-            <div>
-              <img src={newPaper} alt="" />
+          <Link to={`/blog`}>
+            <div className={styles.card_item}>
+              <div>
+                <img src={newPaper} alt="" />
+              </div>
+              <h3>Latest News</h3>
+              <p>Get the latest news and information</p>
             </div>
-            <h3>Latest News</h3>
-            <p>Get the latest news and information</p>
-          </div>
+          </Link>
 
           <div className={styles.card_item}>
             <div>
@@ -112,12 +132,30 @@ export default function Home() {
           <span className={styles.line_text}>Recommended Destinations</span>
           <hr className={styles.horizontal_line} />
         </div>
-        {/* <Card data={filterPosts}/> */}
-        <Card data={Place}/>
 
+        <div className={styles.card_info}>
+          {Place.map((post: AddressType) => (
+            <div className={styles.card_item}>
+              <div className={styles.card_item_info}>
+                <div className={styles.card_item_img}>
+                  <img src={dl} alt="" />
+                </div>
+                <Link
+                  to={`/place-detail?id=${post.id}`}
+                  key={post.id}
+                  className={styles.card_item_link}
+                >
+                  <div key={post.id} className={styles.card_item_content}>
+                    <h1>{post.title}</h1>
+                    <p>{post.description}</p>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
         <Subscribe />
       </div>
     </div>
-
   );
 }
