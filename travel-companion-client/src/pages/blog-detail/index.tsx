@@ -20,8 +20,6 @@ export function BlogDetail() {
   const id = searchParams.get("id");
   const [post, setPost] = useState(postsData);
 
-  // const [posts, setPosts] = useState(postsData)
-
   // useEffect(() => {
   //   fetch(`https://jsonplaceholder.typicode.com/posts?id=${id}`)
   //     .then((res) => res.json())

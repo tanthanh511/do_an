@@ -3,6 +3,7 @@ import img1 from "../../assets/test/Rectangle 451.svg";
 import { Link, useLocation } from "react-router-dom";
 import { addressData } from "../home/address.constant";
 import { useState } from "react";
+import Map from "../../components/map";
 
 export interface PlaceType {
   id: number;
@@ -70,7 +71,10 @@ export default function PlaceDetail() {
           })}
         {/* map */}
 
-        <div className={styles.map}></div>
+        <div className={styles.map} >
+          <Map />
+          
+        </div>
 
         <div className={styles.latest_new}></div>
       </div>

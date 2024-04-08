@@ -20,7 +20,6 @@ export interface AddressType {
 export default function Home() {
   const [Place, setPlace] = useState(addressData);
   const [search, setSearch] = useState("");
-  console.log(search);
 
   // useEffect(()=>{
   //   const getPlace = addressData.map((place : LocationType)=>place)
