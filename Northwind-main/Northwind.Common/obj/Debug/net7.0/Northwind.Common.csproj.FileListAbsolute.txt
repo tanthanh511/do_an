@@ -1,0 +1,11 @@
+D:\HetChoRui\ThucTapNgheNghiep\PracticalApps\Northwind.Common\bin\Debug\net7.0\Northwind.Common.deps.json
+D:\HetChoRui\ThucTapNgheNghiep\PracticalApps\Northwind.Common\bin\Debug\net7.0\Northwind.Common.dll
+D:\HetChoRui\ThucTapNgheNghiep\PracticalApps\Northwind.Common\bin\Debug\net7.0\Northwind.Common.pdb
+D:\HetChoRui\ThucTapNgheNghiep\PracticalApps\Northwind.Common\obj\Debug\net7.0\Northwind.Common.GeneratedMSBuildEditorConfig.editorconfig
+D:\HetChoRui\ThucTapNgheNghiep\PracticalApps\Northwind.Common\obj\Debug\net7.0\Northwind.Common.AssemblyInfoInputs.cache
+D:\HetChoRui\ThucTapNgheNghiep\PracticalApps\Northwind.Common\obj\Debug\net7.0\Northwind.Common.AssemblyInfo.cs
+D:\HetChoRui\ThucTapNgheNghiep\PracticalApps\Northwind.Common\obj\Debug\net7.0\Northwind.Common.csproj.CoreCompileInputs.cache
+D:\HetChoRui\ThucTapNgheNghiep\PracticalApps\Northwind.Common\obj\Debug\net7.0\Northwind.Common.dll
+D:\HetChoRui\ThucTapNgheNghiep\PracticalApps\Northwind.Common\obj\Debug\net7.0\refint\Northwind.Common.dll
+D:\HetChoRui\ThucTapNgheNghiep\PracticalApps\Northwind.Common\obj\Debug\net7.0\Northwind.Common.pdb
+D:\HetChoRui\ThucTapNgheNghiep\PracticalApps\Northwind.Common\obj\Debug\net7.0\ref\Northwind.Common.dll

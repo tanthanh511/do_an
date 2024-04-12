@@ -12,7 +12,7 @@ type dataType=  {
 const fetchAllUser = (page:number )=> {
     return axios.get<dataType, any>(`api/users?page=${page}`)
 }
-
+    
 const loginApi = (email:any , password:any )=>{
     return axios.post<dataType, any>("/api/login",{email,password})
 }

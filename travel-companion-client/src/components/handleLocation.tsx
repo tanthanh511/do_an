@@ -16,14 +16,16 @@ export default function HandleLocation() {
       locationfound(e) {
         setPosition(e.latlng)
         map.flyTo(e.latlng, map.getZoom())
+        console.log(e);    
       },
     })
+    
+    
   
     return position === null ? null : (
-      <img src={lt} alt="" />
-      // <Marker position={position}>
-      //   <Popup>You are here</Popup>
-      // </Marker>
+      <Marker position={position}>
+        <Popup></Popup>
+      </Marker>
     )
   
 };

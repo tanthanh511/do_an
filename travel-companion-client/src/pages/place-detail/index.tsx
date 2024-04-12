@@ -17,8 +17,8 @@ export default function PlaceDetail() {
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get("id");
   const [place, setPlace] = useState(addressData);
-  console.log(id);
-
+  const position: [number, number] = [11.95632, 108.44547]; 
+  const center: [number, number] = [11.95632, 108.44547];
   return (
     <div className={styles.main}>
       <div className={styles.container}>
@@ -72,8 +72,7 @@ export default function PlaceDetail() {
         {/* map */}
 
         <div className={styles.map} >
-          <Map />
-          
+          <Map position={position} center={center}/>
         </div>
 
         <div className={styles.latest_new}></div>

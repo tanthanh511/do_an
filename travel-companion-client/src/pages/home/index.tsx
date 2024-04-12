@@ -9,6 +9,8 @@ import Subscribe from "../../components/subscribe";
 import { addressData } from "./address.constant";
 import { Link } from "react-router-dom";
 import dl from "../../assets/test/dl.svg";
+import Map from "../../components/map";
+import handbook from "../../assets/icon_network_social/handbook.png"
 
 export interface AddressType {
   id: number;
@@ -92,45 +94,50 @@ export default function Home() {
         </div>
 
         <div className={styles.card}>
-          <div className={styles.card_item}>
+          <div
+            className={styles.card_item}
+            onClick={() => {
+              const mapSection = document.getElementById("mapSection");
+              if (mapSection) {
+                mapSection.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+          >
             <div>
               <img src={location} alt="" />
             </div>
             <h3>Best Near You</h3>
             <p>Find the best places to visit near you</p>
           </div>
-
-          <div className={styles.card_item}>
-            <div>
-              <img src={weather} alt="" />
+          <Link to={`/weather`}>
+            <div className={styles.card_item}>
+              <div>
+                <img src={weather} alt="" />
+              </div>
+              <h3>Weather Forecast</h3>
+              <p>Get the latest weather information</p>
             </div>
-            <h3>Weather Forecast</h3>
-            <p>Get the latest weather information</p>
-          </div>
+          </Link>
           <Link to={`/blog`}>
             <div className={styles.card_item}>
               <div>
                 <img src={newPaper} alt="" />
               </div>
-              <h3>Latest News</h3>
+              <h3>News</h3>
               <p>Get the latest news and information</p>
             </div>
           </Link>
 
           <div className={styles.card_item}>
             <div>
-              <img src={dinner} alt="" />
+              <img className={styles.handbook} src={handbook} alt="" />
             </div>
-            <h3>Perfect Restaurants</h3>
-            <p>Enjoy the best delicacies in your city</p>
+            <h3>Tourist Handbook</h3>
+            <p>Necessary skills and essential tools when traveling to Da Lat</p>
           </div>
         </div>
 
-        <div className={styles.horizontal_line_container}>
-          <hr className={styles.horizontal_line} />
-          <span className={styles.line_text}>Recommended Destinations</span>
-          <hr className={styles.horizontal_line} />
-        </div>
+        <span className={styles.line_text}>Recommended Destinations</span>
 
         <div className={styles.card_info}>
           {Place.map((post: AddressType) => (
@@ -152,6 +159,13 @@ export default function Home() {
               </div>
             </div>
           ))}
+        </div>
+
+        <span className={styles.line_text}>MAP</span>
+        <div id="mapSection" className={styles.box_map}>
+          <div className={styles.map}>
+            <Map />
+          </div>
         </div>
         <Subscribe />
       </div>
