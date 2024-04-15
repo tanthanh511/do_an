@@ -19,13 +19,15 @@ public partial class TravelCompanionContext : DbContext
 
     public virtual DbSet<Blog> Blogs { get; set; }
 
+    public virtual DbSet<BlogImage> BlogImages { get; set; }
+
     public virtual DbSet<Category> Categories { get; set; }
 
-    public virtual DbSet<ImageBlog> ImageBlogs { get; set; }
-
-    public virtual DbSet<ImagePlace> ImagePlaces { get; set; }
-
     public virtual DbSet<Place> Places { get; set; }
+
+    public virtual DbSet<PlaceImage> PlaceImages { get; set; }
+
+    public virtual DbSet<ShareContent> ShareContents { get; set; }
 
     public virtual DbSet<Ward> Wards { get; set; }
 
@@ -37,57 +39,64 @@ public partial class TravelCompanionContext : DbContext
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Account__3213E83FFE01FEB7");
+            entity.HasKey(e => e.Id).HasName("PK__Account__3214EC0749DD2550");
 
             entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
         });
 
         modelBuilder.Entity<Blog>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Blog__3213E83F6A1E52D7");
+            entity.HasKey(e => e.Id).HasName("PK__Blog__3214EC0766F16015");
 
             entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
+        });
+
+        modelBuilder.Entity<BlogImage>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__BlogImag__3214EC075B4AE0AA");
+
+            entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
+
+            entity.HasOne(d => d.Blog).WithMany(p => p.BlogImages).HasConstraintName("FK__BlogImage__BlogI__4BAC3F29");
         });
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Category__3213E83F518DFC61");
+            entity.HasKey(e => e.Id).HasName("PK__Category__3214EC075DA85C21");
 
             entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
-        });
-
-        modelBuilder.Entity<ImageBlog>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__ImageBlo__3213E83FDD71D32C");
-
-            entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
-
-            entity.HasOne(d => d.Blog).WithMany(p => p.ImageBlogs).HasConstraintName("FK__ImageBlog__blogI__48CFD27E");
-        });
-
-        modelBuilder.Entity<ImagePlace>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__ImagePla__3213E83F71C689E5");
-
-            entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
-
-            entity.HasOne(d => d.Place).WithMany(p => p.ImagePlaces).HasConstraintName("FK__ImagePlac__place__4CA06362");
         });
 
         modelBuilder.Entity<Place>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Place__3213E83FF8190659");
+            entity.HasKey(e => e.Id).HasName("PK__Place__3214EC07072551B4");
 
             entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
 
-            entity.HasOne(d => d.Category).WithMany(p => p.Places).HasConstraintName("FK__Place__categoryI__440B1D61");
+            entity.HasOne(d => d.Category).WithMany(p => p.Places).HasConstraintName("FK__Place__CategoryI__46E78A0C");
 
-            entity.HasOne(d => d.Ward).WithMany(p => p.Places).HasConstraintName("FK__Place__wardID__44FF419A");
+            entity.HasOne(d => d.Ward).WithMany(p => p.Places).HasConstraintName("FK__Place__WardId__47DBAE45");
+        });
+
+        modelBuilder.Entity<PlaceImage>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__PlaceIma__3214EC07F7E7BF85");
+
+            entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
+
+            entity.HasOne(d => d.Place).WithMany(p => p.PlaceImages).HasConstraintName("FK__PlaceImag__Place__4F7CD00D");
+        });
+
+        modelBuilder.Entity<ShareContent>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__ShareCon__3214EC073082FDF5");
+
+            entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
         });
 
         modelBuilder.Entity<Ward>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Ward__3213E83F649C4171");
+            entity.HasKey(e => e.Id).HasName("PK__Ward__3214EC075CB5FDB7");
 
             entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
         });

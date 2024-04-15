@@ -6,21 +6,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Northwind.Shared;
 
-[Table("ImageBlog")]
-public partial class ImageBlog
+[Table("BlogImage")]
+public partial class BlogImage
 {
     [Key]
-    [Column("id")]
     public Guid Id { get; set; }
 
-    [Column("imgLink")]
-    [StringLength(4000)]
     public string? ImgLink { get; set; }
 
-    [Column("blogID")]
     public Guid? BlogId { get; set; }
 
     [ForeignKey("BlogId")]
-    [InverseProperty("ImageBlogs")]
+    [InverseProperty("BlogImages")]
     public virtual Blog? Blog { get; set; }
 }

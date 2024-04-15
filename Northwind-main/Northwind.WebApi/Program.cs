@@ -44,6 +44,10 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IWardRepository, WardRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IPlaceRepository, PlaceRepository>();
+
 
 builder.Services.AddHttpLogging(options =>
 {
@@ -55,11 +59,17 @@ builder.Services.AddHttpLogging(options =>
 builder.Services
     .AddHealthChecks()
     .AddDbContextCheck<TravelCompanionContext>();
-
-var app = builder.Build();
+builder.Services.AddCors();
+var app = builder.Build();  
 
 app.UseHttpLogging();
 
+app.UseCors(options =>
+{
+    options.AllowAnyOrigin();
+    options.AllowAnyHeader();
+    options.AllowAnyMethod();
+});
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

@@ -10,12 +10,10 @@ namespace Northwind.Shared;
 public partial class Category
 {
     [Key]
-    [Column("id")]
     public Guid Id { get; set; }
 
-    [Column("categoryName")]
     [StringLength(100)]
-    public string? CategoryName { get; set; }
+    public string? Name { get; set; }
 
     [InverseProperty("Category")]
     public virtual ICollection<Place> Places { get; } = new List<Place>();

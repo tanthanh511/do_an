@@ -10,41 +10,66 @@ import { addressData } from "./address.constant";
 import { Link } from "react-router-dom";
 import dl from "../../assets/test/dl.svg";
 import Map from "../../components/map";
-import handbook from "../../assets/icon_network_social/handbook.png"
+import handbook from "../../assets/icon_network_social/handbook.png";
+import { fetchAllWard } from "../../services/ward_service";
+import { Descriptions } from "antd";
+import { Content } from "antd/es/layout/layout";
+import axios from "axios";
 
-export interface AddressType {
-  id: number;
-  title: string;
+export interface WardType {
+  id: string;
+  ward: string;
   description: string;
-  contact: string;
+  content: string;
+}
+
+type dataType=  {
+  id: string;
+  title: string;
+  body: string;
 }
 
 export default function Home() {
-  const [Place, setPlace] = useState(addressData);
-  const [search, setSearch] = useState("");
+  // const [Place, setPlace] = useState(addressData);
+  // const [search, setSearch] = useState("");
 
-  // useEffect(()=>{
-  //   const getPlace = addressData.map((place : LocationType)=>place)
-  //   setPlace(getPlace);
 
-  // },[addressData])
+    // const [posts, setPosts] = useState([]);
+    // useEffect(() => {
+    //   const fetchData = async () => {
+    //     try {
+    //       const response = await fetchAllWard();
+    //       setPosts(response);
+    //     } catch (error) {
+    //       console.error('Error occurred while fetching data:', error);
+    //     }
+    //   };
+  
+    //   fetchData();
+    // }, []);
 
-  // useEffect(()=>{
-  //   fetch("https://jsonplaceholder.typicode.com/posts")
-  //   .then((response) => response.json())
-  //   .then(posts =>{setPosts(posts)})
-  //   const filter = posts.filter((post: AddressType)=> post.id <9)
-  //   setFilterPosts(filter)
-  // },[posts]);
+    const [ward, setWard] = useState([]);
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await fetchAllWard();
+          setWard(response);
+        } catch (error) {
+          console.error('Error occurred while fetching data:', error);
+        }
+      };
+  
+      fetchData();
+    }, []);
 
-  const handleSearch = () => {
-    const filter = addressData.filter((item) => {
-      return search === ""
-        ? addressData
-        : item.title.toLowerCase().includes(search.toLowerCase());
-    });
-    setPlace(filter);
-  };
+  // const handleSearch = () => {
+  //   const filter = addressData.filter((item) => {
+  //     return search === ""
+  //       ? addressData
+  //       : item.title.toLowerCase().includes(search.toLowerCase());
+  //   });
+  //   setPlace(filter);
+  // };
 
   return (
     <div className={styles.main}>
@@ -66,7 +91,7 @@ export default function Home() {
                 </div>
 
                 <div className={styles.search_banner}>
-                  <input
+                  {/* <input
                     type="text"
                     className={styles.ip_search}
                     placeholder="Search your destination"
@@ -86,7 +111,7 @@ export default function Home() {
                   />
                   <button className={styles.btn_search} onClick={handleSearch}>
                     Search
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
@@ -140,26 +165,26 @@ export default function Home() {
         <span className={styles.line_text}>Recommended Destinations</span>
 
         <div className={styles.card_info}>
-          {Place.map((post: AddressType) => (
+          {ward.map((wards: WardType) => (
             <div className={styles.card_item}>
               <div className={styles.card_item_info}>
                 <div className={styles.card_item_img}>
                   <img src={dl} alt="" />
                 </div>
                 <Link
-                  to={`/place-detail?id=${post.id}`}
-                  key={post.id}
+                  to={`/place-detail?id=${wards.id}`}
+                  key={wards.id}
                   className={styles.card_item_link}
                 >
-                  <div key={post.id} className={styles.card_item_content}>
-                    <h1>{post.title}</h1>
-                    <p>{post.description}</p>
+                  <div key={wards.id} className={styles.card_item_content}>
+                    <h1>{wards.ward}</h1>
+                    <p>{wards.description}</p>
                   </div>
                 </Link>
               </div>
             </div>
           ))}
-        </div>
+        </div> 
 
         <span className={styles.line_text}>MAP</span>
         <div id="mapSection" className={styles.box_map}>

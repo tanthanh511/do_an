@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Humanizer;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Northwind.Shared;
 using System.Collections.Concurrent;
 
@@ -6,7 +7,7 @@ namespace Northwind.WebApi.Repositories;
 
 public class AccountRepository : IAccountRepository
 {
-    // Use a static thread-safe dictionary field to cache the customers
+    // Use a static thread-safe dictionary field to cache the acounts
     private static ConcurrentDictionary<string, Account>? accountsCache;
 
     // Use an instance data context field because it should not be cached due to their internal caching
@@ -55,9 +56,7 @@ public class AccountRepository : IAccountRepository
     }
     public async Task<Account?> CreateAsync(Account c)
     {
-       
-        //c.Id = c.Id.ToString().ToUpper();
-
+      
         EntityEntry<Account> added = await db.Accounts.AddAsync(c);
 
         int affected = await db.SaveChangesAsync();
@@ -94,7 +93,7 @@ public class AccountRepository : IAccountRepository
     // Update Account 
     public async Task<Account?> UpdateAsync(string id, Account c)
     {
-        // Normalize customer Id
+        // Normalize acount Id
         id = id;
         c.Id = c.Id;
 
@@ -113,10 +112,14 @@ public class AccountRepository : IAccountRepository
 
     public async Task<bool?> DeleteAsync(string id)
     {
-        id = id;
+        if (!Guid.TryParse(id, out Guid accountId))
+        {
+            // Trả về null nếu id không hợp lệ
+            return null;
+        }
 
         // Remove from database
-        Account? c = db.Accounts.Find(id);
+        Account? c = db.Accounts.Find(accountId);  
         if (c is null)
         {
             return null;

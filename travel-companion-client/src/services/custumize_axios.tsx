@@ -1,7 +1,9 @@
 import axios, { AxiosError } from "axios";
 
 const instance = axios.create({
-  baseURL: "https://reqres.in/",
+  //baseURL: "https://reqres.in/",
+  baseURL: "https://localhost:5002/",
+  
 });
 
 instance.interceptors.response.use(

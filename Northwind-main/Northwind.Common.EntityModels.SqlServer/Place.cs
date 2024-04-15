@@ -10,34 +10,32 @@ namespace Northwind.Shared;
 public partial class Place
 {
     [Key]
-    [Column("id")]
     public Guid Id { get; set; }
 
-    [Column("name")]
     [StringLength(1000)]
     public string? Name { get; set; }
 
-    [Column("address")]
+    [StringLength(500)]
     public string? Address { get; set; }
 
-    [Column("openTime", TypeName = "datetime")]
+    [Column(TypeName = "datetime")]
     public DateTime? OpenTime { get; set; }
 
-    [Column("closeTime", TypeName = "datetime")]
+    [Column(TypeName = "datetime")]
     public DateTime? CloseTime { get; set; }
 
-    [Column("price", TypeName = "money")]
-    public decimal? Price { get; set; }
+    public double? Price { get; set; }
 
-    [Column("categoryID")]
     public Guid? CategoryId { get; set; }
 
-    [Column("wardID")]
     public Guid? WardId { get; set; }
 
     [ForeignKey("CategoryId")]
     [InverseProperty("Places")]
     public virtual Category? Category { get; set; }
+
+    [InverseProperty("Place")]
+    public virtual ICollection<PlaceImage> PlaceImages { get; } = new List<PlaceImage>();
 
     [ForeignKey("WardId")]
     [InverseProperty("Places")]

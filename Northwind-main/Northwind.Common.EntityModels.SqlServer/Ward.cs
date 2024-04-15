@@ -10,17 +10,14 @@ namespace Northwind.Shared;
 public partial class Ward
 {
     [Key]
-    [Column("id")]
     public Guid Id { get; set; }
 
-    [Column("ward")]
-    [StringLength(1000)]
-    public string? Ward1 { get; set; }
+    [StringLength(500)]
+    public string? Name { get; set; }
 
-    [Column("description")]
     public string? Description { get; set; }
 
-    [Column("content", TypeName = "ntext")]
+    [Column(TypeName = "ntext")]
     public string? Content { get; set; }
 
     [InverseProperty("Ward")]

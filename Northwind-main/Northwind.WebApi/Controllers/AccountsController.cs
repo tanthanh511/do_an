@@ -25,7 +25,7 @@ public class AccountsController : ControllerBase
         return await repo.RetrieveAllAsync();
     }
 
-    // POST: api/customers
+    // POST: api/accounts
     // BODY: Customer (JSON, XML)
     [HttpPost]
     [ProducesResponseType(201, Type = typeof(Account))]
@@ -52,7 +52,7 @@ public class AccountsController : ControllerBase
         }
     }
 
-    // GET: api/customers/[id]
+    // GET: api/accounts/[id]
     [HttpGet("{id}", Name = nameof(GetAccounts))] // Named route
     [ProducesResponseType(200, Type = typeof(Account))]
     [ProducesResponseType(404)]
@@ -76,9 +76,6 @@ public class AccountsController : ControllerBase
     [ProducesResponseType(404)]
     public async Task<IActionResult> Update(string id, [FromBody] Account c)
     {
-        id = id;
-        c.Id = c.Id;
-
         if (c == null || c.Id.ToString() != id)
         {
             return BadRequest(); // 400 Bad request
@@ -108,7 +105,7 @@ public class AccountsController : ControllerBase
             ProblemDetails problemDetails = new()
             {
                 Status = StatusCodes.Status400BadRequest,
-                Type = "https://localhost:5001/customers/failed-to-delete",
+                Type = "https://localhost:5001/accounts/failed-to-delete",
                 Title = $"Customer ID {id} found but failed to delete.",
                 Detail = "More details like Company Name, Country and so on.",
                 Instance = HttpContext.Request.Path

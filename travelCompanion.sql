@@ -1,79 +1,85 @@
+CREATE DATABASE TravelCompanion 
+GO 
 
+USE TravelCompanion
+GO
 
-create database TravelCompanion 
-go 
-
-use TravelCompanion
-go
-
-create table ShareContent (
-	slogan nvarchar(500) NOT NULL,
-	introduction nvarchar(900) NULL,
-	phone nvarchar(10) NULL,
-	email nvarchar(20) NULL,
-	address nvarchar(100) NULL,
+CREATE TABLE ShareContent
+(
+  Id           UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
+  Slogan       NVARCHAR(MAX),
+  Introduction NVARCHAR(MAX),
+  Email        NVARCHAR(35),
+  Phone        VARCHAR(11),
+  Address      NVARCHAR(500)
 )
-go
+GO
 
-create table Account (
-	id uniqueidentifier DEFAULT NEWID() primary key,
-	email nvarchar(1000) ,
-	userName nvarchar(50) ,
-	password varchar(50) ,
-	bio nvarchar(max) ,
-	avata nvarchar(100),
-	status int,
+CREATE TABLE Account
+(
+  Id       UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
+  Email    NVARCHAR(35),
+  Username NVARCHAR(50),
+  Password VARCHAR(50),
+  Bio      NVARCHAR(MAX),
+  Avatar   NVARCHAR(MAX),
+  Status   INT
 )
-go
+GO
 
-create table Blog (
-	id uniqueidentifier  DEFAULT NEWID() primary key,
-	title nvarchar(1000),
-	description nvarchar(max),
-	content ntext,
-	dateCreacted datetime,
-	dateModified datetime,
-	status int,
+CREATE TABLE Blog
+(
+  Id           UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
+  Title        NVARCHAR(1000),
+  Description  NVARCHAR(MAX),
+  Content      NTEXT,
+  DateCreated  DATETIME,
+  DateModified DATETIME,
+  Status       INT
 )
-go 
+GO 
 
-create table Category (
-	id uniqueidentifier  DEFAULT NEWID() primary key ,
-	categoryName nvarchar(100) NULL,
+CREATE TABLE Category
+(
+  Id   UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
+  Name NVARCHAR(100)
 )
-go
-create table Ward (
-	id uniqueidentifier   DEFAULT NEWID()primary key ,
-	ward nvarchar(1000) ,
-	description nvarchar(max) ,
-	content ntext ,
+GO
+
+CREATE TABLE Ward
+(
+  Id          UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
+  Name        NVARCHAR(500),
+  Description NVARCHAR(MAX),
+  Content     NTEXT
 )
-go
+GO
 
-create table Place (
-	id uniqueidentifier  DEFAULT NEWID() NOT NULL primary key,
-	name nvarchar(1000) NULL,
-	address nvarchar(max) NULL,
-	openTime datetime NULL,
-	closeTime datetime NULL,
-	price money NULL,
-	categoryID uniqueidentifier  foreign key references  Category(id),
-	wardID  uniqueidentifier  foreign key references  Ward(id)
+CREATE TABLE Place
+(
+  Id         UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
+  Name       NVARCHAR(1000),
+  Address    NVARCHAR(500),
+  OpenTime   DATETIME,
+  CloseTime  DATETIME,
+  Price      FLOAT,
+  CategoryId UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Category(Id),
+  WardId     UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Ward(Id)
 )
-go 
+GO 
 
-create table ImageBlog (
-	id uniqueidentifier  DEFAULT NEWID() primary key,
-	imgLink nvarchar(4000) ,
-	blogID uniqueidentifier  foreign key references  Blog(id)
+CREATE TABLE BlogImage
+(
+  Id      UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
+  ImgLink NVARCHAR(MAX),
+  BlogId  UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Blog(Id)
 )
-go
+GO
 
-create table ImagePlace (
-	id uniqueidentifier  DEFAULT NEWID() primary key,
-	imgLink nvarchar(4000) ,
-	placeID uniqueidentifier  foreign key references  Blog(id)
+CREATE TABLE PlaceImage
+(
+  Id      UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
+  Imglink NVARCHAR(MAX),
+  PlaceId UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Place(Id)
 )
-go
-
-
+GO
