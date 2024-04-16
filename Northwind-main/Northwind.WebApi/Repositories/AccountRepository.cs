@@ -1,6 +1,9 @@
 ﻿using Humanizer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Northwind.Shared;
+using Northwind.WebApi.Authorization;
+using Northwind.WebApi.Models;
 using System.Collections.Concurrent;
 
 namespace Northwind.WebApi.Repositories;
@@ -13,7 +16,7 @@ public class AccountRepository : IAccountRepository
     // Use an instance data context field because it should not be cached due to their internal caching
     private TravelCompanionContext db;
 
-    public AccountRepository(TravelCompanionContext injectedContext)
+    public AccountRepository(TravelCompanionContext injectedContext, IJwtUtils jwtUtils)
     {
         db = injectedContext;
         // pre-load customers from database as a normal
@@ -23,11 +26,9 @@ public class AccountRepository : IAccountRepository
             accountsCache = new ConcurrentDictionary<string, Account>(
                 db.Accounts.ToDictionary(c => c.Id.ToString()));
         }
+
+        _jwtUtils = jwtUtils;
     }
-
-    
-
-
 
     public Task<IEnumerable<Account>> RetrieveAllAsync()
     {
@@ -143,4 +144,40 @@ public class AccountRepository : IAccountRepository
             return null;
         }
     }
+
+
+    // token
+    private List<Account> _users = new List<Account>
+    {
+        new Account { Id = new Guid("03b5d3b2-eb9e-4b39-8ab8-2e49e6882eae"), Email = "Test", Username = "user", Password = "test" }
+    };
+
+    private readonly IJwtUtils _jwtUtils;
+
+
+
+    public AuthenticateResponse? Authenticate(AuthenticateRequest model)
+    {
+        var account = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+
+        // return null if user not found
+        if (account == null) return null;
+
+        // authentication successful so generate jwt token
+        var token = _jwtUtils.GenerateJwtToken(account);
+
+        return new AuthenticateResponse(account, token);
+    }
+
+    //public async Task<AuthenticateResponse?> Authenticate(AuthenticateRequest model)
+    //{
+    //    var account = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+
+    //    if (account == null)
+    //        return null;
+
+    //    var token = await Task.FromResult(_jwtUtils.GenerateJwtToken(account));
+
+    //    return new AuthenticateResponse(account, token);
+    //}
 }

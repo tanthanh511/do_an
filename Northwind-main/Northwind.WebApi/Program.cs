@@ -4,12 +4,40 @@ using Northwind.Common.DataContext.SqlServer;
 using Northwind.WebApi.Repositories;
 using Northwind.Shared;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 using static System.Console;
+using System.Text;
+using Northwind.WebApi.Authorization;
+using Northwind.WebApi.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
-
 builder.WebHost.UseUrls("https://localhost:5002/");
+//custumer token
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddJwtBearer(options =>
+//    {
+//        options.TokenValidationParameters = new TokenValidationParameters
+//        {
+//            ValidateIssuer = true,
+//            ValidateAudience = true,
+//            ValidateLifetime = true,
+//            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+//            ValidAudience = builder.Configuration["Jwt:Audience"],
+//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+//        };
+//    });
+
+// token
+// configure strongly typed settings object
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+
+// configure DI for application services
+builder.Services.AddScoped<IJwtUtils, JwtUtils>();
+///
+
+
 
 // Add services to the container.
 builder.Services.AddTravelCompanionContext();
@@ -47,6 +75,7 @@ builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IWardRepository, WardRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IPlaceRepository, PlaceRepository>();
+builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 
 
 builder.Services.AddHttpLogging(options =>
@@ -59,7 +88,9 @@ builder.Services.AddHttpLogging(options =>
 builder.Services
     .AddHealthChecks()
     .AddDbContextCheck<TravelCompanionContext>();
+
 builder.Services.AddCors();
+
 var app = builder.Build();  
 
 app.UseHttpLogging();
@@ -85,13 +116,18 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+// token
+app.UseAuthentication();
+//
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.UseHealthChecks(path: "/howdoyoufeel");
 
-app.UseMiddleware<SecurityHeaders>();
+app.UseMiddleware<JwtMiddleware>();
+//app.UseMiddleware<SecurityHeaders>();
 
 app.MapControllers();
 

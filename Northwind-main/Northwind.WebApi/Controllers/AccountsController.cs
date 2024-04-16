@@ -1,19 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Northwind.WebApi.Repositories;
 using Northwind.Shared;
+using Northwind.WebApi.Authorization;
+using Northwind.WebApi.Models;
 
 namespace Northwind.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class AccountsController : ControllerBase
 {
+    
     private readonly IAccountRepository repo;
 
     // Constructor injects repository registered in Startup
-    public AccountsController(IAccountRepository repo)
+    public AccountsController(IAccountRepository repo  )
     {
         this.repo = repo;
+       
     }
 
     // GET: api/account
@@ -130,4 +135,28 @@ public class AccountsController : ControllerBase
             return BadRequest($"Customer {id} was found but failed to delete.");
         }
     }
+
+
+    [AllowAnonymous]
+    [HttpPost("authenticate")]
+    public IActionResult Authenticate(AuthenticateRequest model)
+    {
+        var response = repo.Authenticate(model);
+
+        if (response == null)
+            return BadRequest(new { message = "Username or password is incorrect" });
+
+        return Ok(response);
+    }
+
+    //public async Task<IActionResult> Authenticate(AuthenticateRequest model)
+    //{
+    //    var response = await repo.Authenticate(model);
+
+    //    if (response == null)
+    //        return BadRequest(new { message = "Username or password is incorrect" });
+
+    //    return Ok(response);
+    //}
+
 }
