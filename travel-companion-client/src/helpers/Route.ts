@@ -1,7 +1,7 @@
 export enum ROUTE_NAME {
   HOME = "/",
   BLOG = "/blog",
-  PLACEDETAIL = "/place-detail",
+  WARDDETAIL = "/ward-detail",
   CONTACT = "/contact",
   WEATHER= "/weather",
   LOGIN = "/login",
@@ -9,5 +9,8 @@ export enum ROUTE_NAME {
   ADMIN = "/admin",
   USERADMIN= "/user-admin",
   BLOGADMIN= "/blog-admin",
-  BLOGDETAIL="/blog-detail"
+  BLOGDETAIL="/blog-detail",
+  USERDETAIL="/user-detail",
+  PLACEDETAIL = "/place-detail",
+
 }

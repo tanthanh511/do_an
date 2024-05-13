@@ -11,7 +11,7 @@ export interface Props {}
 
 export default function Header(props: Props) {
   const { t } = useTranslation();
-  const { logout, user } = useContext(UserContext)!;
+  const { logout, user } = useContext(UserContext)!; 
 
   const navigate = useNavigate();
 
@@ -40,18 +40,6 @@ export default function Header(props: Props) {
         </div>
 
         <div className={styles.navbar_header}>
-          {/* <li>
-            <Link to={ROUTE_NAME.HOME}>{t("home")}</Link>
-          </li>
-          <li>
-            <Link to={ROUTE_NAME.PLACE}>{t("place")}</Link>
-          </li>
-          <li>
-            <Link to={ROUTE_NAME.BLOG}>{t("blog")}</Link>
-          </li>
-          <li>
-            <Link to={ROUTE_NAME.CONTACT}>{t("contact")}</Link>
-          </li> */}
           {Menus.map((menu, index) => (
             <li key={index}>
               <Link to={menu.href}>{t(menu.name)}</Link>
@@ -89,6 +77,11 @@ export default function Header(props: Props) {
               {user && user.auth === true ? (
                 <div>
                   <li>{user.email}</li>
+                  <li>
+                    <Link to={ROUTE_NAME.USERDETAIL} onClick={handleLogout}>
+                      Profile
+                    </Link>
+                  </li>
                   <li>
                     <Link to={ROUTE_NAME.HOME} onClick={handleLogout}>
                       {t("logout")}

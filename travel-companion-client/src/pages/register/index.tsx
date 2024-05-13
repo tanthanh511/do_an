@@ -1,50 +1,82 @@
 import styles from "./styles.module.scss";
 import register from "../../assets/register.svg";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { registerApi } from "../../services/user_service";
 
 type Props = {};
 
-const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+// const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
+// const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 export default function Register() {
-  const userRef = useRef();
-  const errRef = useRef();
+  // const userRef = useRef();
+  // const errRef = useRef();
 
-  const [user, setUser] = useState("");
-  const [validName, setValidName] = useState(false);
-  const [userFocus, setUserFocus] = useState(false);
+  // const [user, setUser] = useState("");
+  // const [validName, setValidName] = useState(false);
+  // const [userFocus, setUserFocus] = useState(false);
 
-  const [pwd, setPwd] = useState("");
-  const [validPwd, setValidPwd] = useState(false);
-  const [pwdFocus, setPwdFocus] = useState(false);
+  // const [pwd, setPwd] = useState("");
+  // const [validPwd, setValidPwd] = useState(false);
+  // const [pwdFocus, setPwdFocus] = useState(false);
 
-  const [matchPwd, setMatchPwd] = useState("");
-  const [validMatch, setValidMatch] = useState(false);
-  const [matchFocus, setMatchFocus] = useState(false);
+  // const [matchPwd, setMatchPwd] = useState("");
+  // const [validMatch, setValidMatch] = useState(false);
+  // const [matchFocus, setMatchFocus] = useState(false);
 
-  const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
+  // const [errMsg, setErrMsg] = useState("");
+  // const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    // useRef. current.focus();
-  }, []);
+  // useEffect(() => {
+  //   // useRef. current.focus();
+  // }, []);
 
-  useEffect(() => {
-    const result = USER_REGEX.test(user);
-    console.log(result);
-    console.log(user);
-    setValidName(result);
-  }, [user]);
+  // useEffect(() => {
+  //   const result = USER_REGEX.test(user);
 
-  useEffect(() => {
-    const result = USER_REGEX.test(pwd);
-    console.log(result);
-    console.log(pwd);
-    setValidName(result);
-    const match = pwd === matchPwd;
-    setValidPwd(match);
-  }, [pwd, matchPwd]);
+  //   setValidName(result);
+  // }, [user]);
+
+  // useEffect(() => {
+  //   const result = USER_REGEX.test(pwd);
+
+  //   setValidName(result);
+  //   const match = pwd === matchPwd;
+  //   setValidPwd(match);
+  // }, [pwd, matchPwd]);
+
+  const [email, setEmail] = useState("");
+  const [username, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [bio, setBio] = useState("");
+
+  const isCheckValidate = () => {
+    let regx = /\S+@\S+\.\S+/;
+    if (!email) {
+      toast.error("Email is required");
+      return false;
+    }
+    if (!regx.test(email)) {
+      toast.error("Please enter a valid email address");
+      return false;
+    }
+    if (!username) {
+      toast.error("Name is required");
+      return false;
+    }
+    if (!password) {
+      toast.error("Password is required");
+      return false;
+    }
+    return true;
+  };
+  const handleRegister = () => {
+    let check = isCheckValidate();
+    if (check === true) {
+      registerApi(email, username, password, bio);
+    }
+  };
 
   return (
     <div>
@@ -54,22 +86,24 @@ export default function Register() {
           <div className={styles.register_form}>
             <h2 className={styles.title}>Welcome to Travel Companion</h2>
             <form>
+              <div className={styles.email}>
+                <label htmlFor="email">Email</label>
+                <input
+                  type="text"
+                  id="email"
+                  value={email}
+                  required
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
               <div className={styles.username}>
                 <label htmlFor="username">Username</label>
                 <input
                   type="text"
                   id="username"
                   required
-                  onChange={(e) => e.target.value}
-                />
-              </div>
-              <div className={styles.email}>
-                <label htmlFor="email">Email</label>
-                <input
-                  type="text"
-                  id="email"
-                  required
-                  onChange={(e) => e.target.value}
+                  value={username}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className={styles.password}>
@@ -77,8 +111,9 @@ export default function Register() {
                 <input
                   type="password"
                   id="password"
+                  value={password}
                   required
-                  onChange={(e) => e.target.value}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className={styles.bio}>
@@ -86,12 +121,17 @@ export default function Register() {
                 <input
                   type="text"
                   id="bio"
+                  value={bio}
                   required
-                  onChange={(e) => e.target.value}
+                  onChange={(e) => setBio(e.target.value)}
                 />
               </div>
               <div className={styles.btn_register}>
-                <button className={styles.submit} type="submit">
+                <button
+                  className={styles.submit}
+                  //type="submit"
+                  onClick={handleRegister}
+                >
                   register
                 </button>
               </div>

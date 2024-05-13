@@ -15,6 +15,9 @@ public partial class Blog
     [StringLength(1000)]
     public string? Title { get; set; }
 
+    [StringLength(500)]
+    public string? Author { get; set; }
+
     public string? Description { get; set; }
 
     [Column(TypeName = "ntext")]

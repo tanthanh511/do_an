@@ -5,26 +5,26 @@ import phone from "../../assets/contact/phone_contact.svg";
 import email from "../../assets/contact/email_contact.svg";
 import address from "../../assets/contact/address_contact.svg";
 import Subscribe from "../../components/subscribe";
+import { useTranslation } from "react-i18next";
 
 export default function Contact() {
+  const { t } = useTranslation();
+
   return (
     <div className={styles.main}>
       <div className={styles.container}>
-        <div className={styles.search}>
-          {/* <Search /> */}
-        </div>
+        <div className={styles.search}>{/* <Search /> */}</div>
         <div className={styles.introduction_banner}>
           <div className={styles.content_banner}>
             <div className={styles.about_us}>
               <div className={styles.text}>
-                <h3>About us</h3>
+                <h3>{t("aboutUs")}</h3>
               </div>
             </div>
-            <h2>Traveling Opens The Door To Creating Memories</h2>
+            <h2>{t("traveling")}</h2>
             <p>
-              Whether we travel solo, with friends, or family, the shared
-              experiences <br /> and adventures help strengthen bonds and create
-              deeper connections <br /> with our companions.
+              {t("whether")} <br />
+              {t("connections")} <br />{t("companions")}
             </p>
           </div>
 
@@ -36,7 +36,7 @@ export default function Contact() {
           <div className={styles.card_infomation}>
             <div className={styles.contact_us}>
               <div className={styles.contact_text}>
-                <h3>Contact Us</h3>
+                <h3>{t("contactUs")}</h3>
               </div>
             </div>
             <div className={styles.phone}>
@@ -53,9 +53,7 @@ export default function Contact() {
             </div>
             <div className={styles.text_thankyou}>
               <p>
-                Thank you to our valued customers for taking the time and effort
-                to share their feedback. This helps us improve and develop
-                further. ^_^
+                {t("thankYou")} ^_^
               </p>
             </div>
           </div>

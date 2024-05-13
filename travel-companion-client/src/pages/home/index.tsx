@@ -9,58 +9,70 @@ import Subscribe from "../../components/subscribe";
 import { addressData } from "./address.constant";
 import { Link } from "react-router-dom";
 import dl from "../../assets/test/dl.svg";
-import Map from "../../components/map";
 import handbook from "../../assets/icon_network_social/handbook.png";
 import { fetchAllWard } from "../../services/ward_service";
-import { Descriptions } from "antd";
-import { Content } from "antd/es/layout/layout";
-import axios from "axios";
+
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+// import HandleLocation from "../handleLocation";
+import L from "leaflet";
+import HandleLocation from "../../components/handleLocation";
+import { useTranslation } from "react-i18next";
+
+// @ts-ignore
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconUrl: markerIcon,
+  iconRetinaUrl: markerIcon2x,
+  shadowUrl: markerShadow,
+});
 
 export interface WardType {
   id: string;
-  ward: string;
+  name: string;
   description: string;
   content: string;
 }
-
-type dataType=  {
-  id: string;
-  title: string;
-  body: string;
-}
+type LocationType = {
+  latitude: number;
+  longitude: number;
+};
 
 export default function Home() {
   // const [Place, setPlace] = useState(addressData);
   // const [search, setSearch] = useState("");
+  const { t } = useTranslation();
 
 
-    // const [posts, setPosts] = useState([]);
-    // useEffect(() => {
-    //   const fetchData = async () => {
-    //     try {
-    //       const response = await fetchAllWard();
-    //       setPosts(response);
-    //     } catch (error) {
-    //       console.error('Error occurred while fetching data:', error);
-    //     }
-    //   };
-  
-    //   fetchData();
-    // }, []);
+  const [ward, setWard] = useState([]);
 
-    const [ward, setWard] = useState([]);
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await fetchAllWard();
-          setWard(response);
-        } catch (error) {
-          console.error('Error occurred while fetching data:', error);
-        }
-      };
-  
-      fetchData();
-    }, []);
+  const [UserLocation, setUserLocation] = useState<LocationType>({
+    
+    latitude: 11.95632,
+    longitude: 108.44547,
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetchAllWard();
+        setWard(response);
+      } catch (error) {
+        console.error("Error occurred while fetching data:", error);
+      }
+    };
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+      setUserLocation({ latitude, longitude });
+    });
+
+    fetchData();
+  }, []);
 
   // const handleSearch = () => {
   //   const filter = addressData.filter((item) => {
@@ -80,13 +92,12 @@ export default function Home() {
               <img src={banner} alt="" />
               <div className={styles.content_banner}>
                 <div className={styles.title_banner}>
-                  <label htmlFor="">Travel to Explore</label>
+                  <label htmlFor="">{t("travelToExplore")}</label>
                 </div>
 
                 <div className={styles.text_content_banner}>
                   <label htmlFor="">
-                    Still round the corner, there may wait, <br /> a new road or
-                    a secret gate !
+                    {t("stillRound")} <br /> {t("aNew")}
                   </label>
                 </div>
 
@@ -131,16 +142,16 @@ export default function Home() {
             <div>
               <img src={location} alt="" />
             </div>
-            <h3>Best Near You</h3>
-            <p>Find the best places to visit near you</p>
+            <h3>{t("yourPosition")}</h3>
+            <p>{t("bestNearYou")}</p>
           </div>
           <Link to={`/weather`}>
             <div className={styles.card_item}>
               <div>
                 <img src={weather} alt="" />
               </div>
-              <h3>Weather Forecast</h3>
-              <p>Get the latest weather information</p>
+              <h3>{t("weatherForecast")}</h3>
+              <p>{t("weatherForecastInDL")}</p>
             </div>
           </Link>
           <Link to={`/blog`}>
@@ -148,8 +159,8 @@ export default function Home() {
               <div>
                 <img src={newPaper} alt="" />
               </div>
-              <h3>News</h3>
-              <p>Get the latest news and information</p>
+              <h3>{t("blog")}</h3>
+              <p>{t("news")}</p>
             </div>
           </Link>
 
@@ -157,12 +168,12 @@ export default function Home() {
             <div>
               <img className={styles.handbook} src={handbook} alt="" />
             </div>
-            <h3>Tourist Handbook</h3>
-            <p>Necessary skills and essential tools when traveling to Da Lat</p>
+            <h3>{t("touristHandbook")}</h3>
+            <p>{t("necessary")}</p>
           </div>
         </div>
 
-        <span className={styles.line_text}>Recommended Destinations</span>
+        <span className={styles.line_text}>{t("ward")}</span>
 
         <div className={styles.card_info}>
           {ward.map((wards: WardType) => (
@@ -172,24 +183,42 @@ export default function Home() {
                   <img src={dl} alt="" />
                 </div>
                 <Link
-                  to={`/place-detail?id=${wards.id}`}
+                  to={`/ward-detail?id=${wards.id}`}
                   key={wards.id}
                   className={styles.card_item_link}
                 >
                   <div key={wards.id} className={styles.card_item_content}>
-                    <h1>{wards.ward}</h1>
+                    <h1>{wards.name}</h1>
                     <p>{wards.description}</p>
                   </div>
                 </Link>
               </div>
             </div>
           ))}
-        </div> 
+        </div>
 
-        <span className={styles.line_text}>MAP</span>
+        <span className={styles.line_text}>{t("map")}</span>
         <div id="mapSection" className={styles.box_map}>
           <div className={styles.map}>
-            <Map />
+            <MapContainer
+              center={[UserLocation.latitude, UserLocation.longitude]}
+              zoom={12}
+              style={{ width: "70%", height: "400px", borderRadius: "20px" }}
+              scrollWheelZoom={true}
+            >
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <Marker
+                position={[UserLocation.latitude, UserLocation.longitude]}
+              >
+                <Popup>
+                  {UserLocation.latitude}, {UserLocation.longitude}
+                </Popup>
+              </Marker>
+              <HandleLocation />
+            </MapContainer>
           </div>
         </div>
         <Subscribe />

@@ -39,21 +39,21 @@ public partial class TravelCompanionContext : DbContext
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Account__3214EC0749DD2550");
+            entity.HasKey(e => e.Id).HasName("PK__Account__3214EC072069757A");
 
             entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
         });
 
         modelBuilder.Entity<Blog>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Blog__3214EC0766F16015");
+            entity.HasKey(e => e.Id).HasName("PK__Blog__3214EC0791E21D40");
 
             entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
         });
 
         modelBuilder.Entity<BlogImage>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__BlogImag__3214EC075B4AE0AA");
+            entity.HasKey(e => e.Id).HasName("PK__BlogImag__3214EC07089CE503");
 
             entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
 
@@ -62,14 +62,14 @@ public partial class TravelCompanionContext : DbContext
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Category__3214EC075DA85C21");
+            entity.HasKey(e => e.Id).HasName("PK__Category__3214EC07016167BC");
 
             entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
         });
 
         modelBuilder.Entity<Place>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Place__3214EC07072551B4");
+            entity.HasKey(e => e.Id).HasName("PK__Place__3214EC07170B19DF");
 
             entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
 
@@ -80,7 +80,7 @@ public partial class TravelCompanionContext : DbContext
 
         modelBuilder.Entity<PlaceImage>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__PlaceIma__3214EC07F7E7BF85");
+            entity.HasKey(e => e.Id).HasName("PK__PlaceIma__3214EC077CD74486");
 
             entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
 
@@ -89,14 +89,14 @@ public partial class TravelCompanionContext : DbContext
 
         modelBuilder.Entity<ShareContent>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ShareCon__3214EC073082FDF5");
+            entity.HasKey(e => e.Id).HasName("PK__ShareCon__3214EC076DBDE077");
 
             entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
         });
 
         modelBuilder.Entity<Ward>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Ward__3214EC075CB5FDB7");
+            entity.HasKey(e => e.Id).HasName("PK__Ward__3214EC07302A9355");
 
             entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
         });

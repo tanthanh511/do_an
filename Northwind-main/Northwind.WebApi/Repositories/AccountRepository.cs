@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Northwind.Shared;
-using Northwind.WebApi.Authorization;
-using Northwind.WebApi.Models;
+//using Northwind.WebApi.Authorization;
+//using Northwind.WebApi.Models;
 using System.Collections.Concurrent;
 
 namespace Northwind.WebApi.Repositories;
@@ -16,7 +16,7 @@ public class AccountRepository : IAccountRepository
     // Use an instance data context field because it should not be cached due to their internal caching
     private TravelCompanionContext db;
 
-    public AccountRepository(TravelCompanionContext injectedContext, IJwtUtils jwtUtils)
+    public AccountRepository(TravelCompanionContext injectedContext) //, IJwtUtils jwtUtils
     {
         db = injectedContext;
         // pre-load customers from database as a normal
@@ -27,7 +27,7 @@ public class AccountRepository : IAccountRepository
                 db.Accounts.ToDictionary(c => c.Id.ToString()));
         }
 
-        _jwtUtils = jwtUtils;
+       // _jwtUtils = jwtUtils;
     }
 
     public Task<IEnumerable<Account>> RetrieveAllAsync()
@@ -91,13 +91,28 @@ public class AccountRepository : IAccountRepository
     }
 
 
+    public Task<Account?> LoginAsync(string email, string password)
+    {
+        if (accountsCache is null)
+        {
+            return null!;
+        }
+        else
+        {
+            if (accountsCache.TryGetValue(email, out Account? c))
+            {
+                if(c.Password == password)
+                {
+                    return Task.FromResult(c);
+                }
+            }
+        }
+        return Task.FromResult<Account?>(null);
+    }
+
     // Update Account 
     public async Task<Account?> UpdateAsync(string id, Account c)
     {
-        // Normalize acount Id
-        id = id;
-        c.Id = c.Id;
-
         // Update in database
         db.Accounts.Update(c);
 
@@ -146,37 +161,46 @@ public class AccountRepository : IAccountRepository
     }
 
 
+
+
+
+
+
     // token
-    private List<Account> _users = new List<Account>
-    {
-        new Account { Id = new Guid("03b5d3b2-eb9e-4b39-8ab8-2e49e6882eae"), Email = "Test", Username = "user", Password = "test" }
-    };
-
-    private readonly IJwtUtils _jwtUtils;
-
-
-
-    public AuthenticateResponse? Authenticate(AuthenticateRequest model)
-    {
-        var account = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
-
-        // return null if user not found
-        if (account == null) return null;
-
-        // authentication successful so generate jwt token
-        var token = _jwtUtils.GenerateJwtToken(account);
-
-        return new AuthenticateResponse(account, token);
-    }
-
-    //public async Task<AuthenticateResponse?> Authenticate(AuthenticateRequest model)
+    //private List<Account> _users = new List<Account>
     //{
-    //    var account = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+    //    new Account { Id = new Guid("03b5d3b2-eb9e-4b39-8ab8-2e49e6882eae"), Email = "Test", Username = "user", Password = "test" }
+    //};
 
-    //    if (account == null)
-    //        return null;
 
-    //    var token = await Task.FromResult(_jwtUtils.GenerateJwtToken(account));
+
+
+    // đang lỗi 
+    //private readonly IJwtUtils _jwtUtils;
+
+    //public AuthenticateResponse? Authenticate(AuthenticateRequest model)
+    //{
+    //    var account = db.Accounts.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+
+    //    // return null if user not found
+    //    if (account == null) return null;
+
+    //    // authentication successful so generate jwt token
+    //    var token = _jwtUtils.GenerateJwtToken(account);
+
+    //    return new AuthenticateResponse(account, token);
+    //}
+
+
+    //public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest model)
+    //{
+    //    var account = db.Accounts.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+    //    // var account = await db.Set<Account>().AsNoTracking().FirstOrDefaultAsync(x => x.Username == model.Username && x.Password == model.Password);
+    //    // return null if user not found
+    //    if (account == null) return null;
+
+    //    // authentication successful so generate jwt token
+    //    var token = _jwtUtils.GenerateJwtToken(account);
 
     //    return new AuthenticateResponse(account, token);
     //}

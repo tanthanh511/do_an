@@ -3,17 +3,15 @@ import axios from './custumize_axios'
 
 type dataType=  {
     id: string;
-    ward: string;
-    description: string;
-    contact: string;
+    name: string;
 }
 
-const fetchAllWard = ()=> {
-    return axios.get<dataType, any>(`api/Category`)
+const fetchAllCategory = ()=> {
+    return axios.get<dataType, any>(`api/Categories`)
 }
 
 
 // const loginApi = (email:any , password:any )=>{
 //     return axios.post<dataType, any>("/api/login",{email,password})
 // }
-export {fetchAllWard}
+export {fetchAllCategory}

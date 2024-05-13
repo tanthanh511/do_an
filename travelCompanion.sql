@@ -1,3 +1,6 @@
+Drop database TravelCompanion
+
+
 CREATE DATABASE TravelCompanion 
 GO 
 
@@ -31,6 +34,7 @@ CREATE TABLE Blog
 (
   Id           UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
   Title        NVARCHAR(1000),
+  Author	   NVARCHAR(500),
   Description  NVARCHAR(MAX),
   Content      NTEXT,
   DateCreated  DATETIME,
@@ -51,7 +55,9 @@ CREATE TABLE Ward
   Id          UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
   Name        NVARCHAR(500),
   Description NVARCHAR(MAX),
-  Content     NTEXT
+  Content     NTEXT,
+  Lon		 FLOAT,
+  Lat		 FLOAT
 )
 GO
 
@@ -64,7 +70,9 @@ CREATE TABLE Place
   CloseTime  DATETIME,
   Price      FLOAT,
   CategoryId UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Category(Id),
-  WardId     UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Ward(Id)
+  WardId     UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Ward(Id),
+  Lon		 FLOAT,
+  Lat		 FLOAT
 )
 GO 
 

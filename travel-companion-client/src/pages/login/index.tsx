@@ -1,10 +1,10 @@
 import { ROUTE_NAME } from "../../helpers/Route";
 import styles from "./styles.module.scss";
 import register from "../../assets/register.svg";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import hidden from "../../assets/loginAndRegister/eye.svg";
 import eyeSlash from "../../assets/loginAndRegister/eye-slash.svg";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { loginApi } from "../../services/user_service";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
@@ -53,23 +53,32 @@ export default function Login() {
     }
 
     setLoading(true);
-    const res = await loginApi(email, password);
-
-    if (res && res.token) {
-      loginContext(email, res.token);
-      //localStorage.setItem("token", res.token);
+    const res = await loginApi(email, password);    
+    // if (res && res.token) {
+    //   loginContext(email, res.token);
+    //   //localStorage.setItem("token", res.token);
+    //   navigate("/");
+    // } else {
+    //   if (res && res.response?.status === 400) {
+    //     toast.error(res.response?.data.error);
+    //   }
+    // }
+    // setLoading(false);    
+    if(res != null && res.response?.status !== 404){
+      const { username, bio } = res;
+      loginContext(email, password, username, bio);
+      toast.success("Login success")
       navigate("/");
-    } else {
-      if (res && res.response?.status === 400) {
-        toast.error(res.response?.data.error);
+    } else{
+      if(res != null && res.response?.status === 404){
+       // toast.error(res.response?.data.error);
+       toast.error("Login failed");
       }
     }
-    setLoading(false);
+    setLoading(false)
   };
 
   const handlePressEnter = async (e: any) => {
-    console.log(e);
-
     if (e && e.key === "Enter") {
       await handleLogin();
     }
@@ -84,7 +93,7 @@ export default function Login() {
           <h2 className={styles.title}>Welcome to Travel Companion</h2>
 
           <div className={styles.username}>
-            <label htmlFor="username">Username (eve.holt@reqres.in)</label>
+            <label htmlFor="username">Username</label>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -156,3 +165,4 @@ export default function Login() {
     </div>
   );
 }
+    

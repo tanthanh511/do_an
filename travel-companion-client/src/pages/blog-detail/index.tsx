@@ -7,6 +7,7 @@ import img2 from "../../assets/blog_detail2.svg";
 import img3 from "../../assets/blog_detail3.svg";
 import { postsData } from "../blog/posts.constant";
 import dl from "../../assets/test/dl.svg";
+import { useTranslation } from "react-i18next";
 
 export interface PostType {
   id: number;
@@ -16,6 +17,8 @@ export interface PostType {
 }
 export function BlogDetail() {
   const location = useLocation();
+  const { t } = useTranslation();
+
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get("id");
   const [post, setPost] = useState(postsData);
@@ -102,7 +105,7 @@ export function BlogDetail() {
       </div>
 
       <div className={styles.last_new}>
-        <h1 className={styles.title_latestnew}>Latest -New</h1>
+        <h1 className={styles.title_latestnew}>{t("latestNew")}</h1>
         <div className={styles.card_content}>
           <div className={styles.card_info}>
             {postsData
@@ -116,10 +119,16 @@ export function BlogDetail() {
                       {" "}
                       <img src={dl} alt="" />
                     </div>
+                    <Link
+                    to={`/blog-detail?id=${posts.id}`}
+                    key={posts.id}
+                    className={styles.card_item_link}
+                  >
                     <div key={posts.id} className={styles.card_item_content}>
                       <h1>{posts.title}</h1>
                       <p>{posts.description}</p>
                     </div>
+                    </Link>
                   </div>
                 </div>
               ))}

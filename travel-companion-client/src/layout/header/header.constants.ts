@@ -7,4 +7,6 @@ export const Menus: IMenus[] = [
   { name: "blog", index: 2, href: ROUTE_NAME.BLOG },
   { name: "contact", index: 3, href: ROUTE_NAME.CONTACT }, 
   { name: "weather", index: 4, href: ROUTE_NAME.WEATHER },
+ 
+
 ];

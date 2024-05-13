@@ -87,7 +87,7 @@
         text-align: center;
         background-color: #f2f8ff;
         border-radius: 10px;
-        .handbook{
+        .handbook {
           width: 36px;
           height: 36px;
         }
@@ -116,7 +116,7 @@
     //     width: 100%;
     //   }
     // }
-   
+
     .line_text {
       display: flex;
       justify-content: center;
@@ -124,7 +124,7 @@
       font-weight: 900;
       width: 100%;
       margin: 40px 0;
-     text-decoration: underline;
+      text-decoration: underline;
     }
 
     .card_info {
@@ -175,18 +175,19 @@
       }
     }
 
-    
-    .box_map{
-      margin: 0 40px 40px 40px ;
-      border: 2px solid #7f7e7e;
-      border-radius: 10px ;
-      background-color: #f2f8ff;
-      .map{
-        margin: 40px;
+    .box_map {
+      // margin: 0 80px 0px 40px;
+      // border: 2px solid #7f7e7e;
+      // border-radius: 10px;
+      // background-color: #f2f8ff;
+      margin-bottom: 60px;
+      .map {
+        
         border-radius: 15px;
+        display: flex;
+        justify-content: center; 
+        align-items: center;
       }
-      
     }
-    
   }
 }

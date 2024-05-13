@@ -20,6 +20,10 @@ public partial class Ward
     [Column(TypeName = "ntext")]
     public string? Content { get; set; }
 
+    public double? Lon { get; set; }
+
+    public double? Lat { get; set; }
+
     [InverseProperty("Ward")]
     public virtual ICollection<Place> Places { get; } = new List<Place>();
 }

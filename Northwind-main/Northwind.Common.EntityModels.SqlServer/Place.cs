@@ -30,6 +30,10 @@ public partial class Place
 
     public Guid? WardId { get; set; }
 
+    public double? Lon { get; set; }
+
+    public double? Lat { get; set; }
+
     [ForeignKey("CategoryId")]
     [InverseProperty("Places")]
     public virtual Category? Category { get; set; }

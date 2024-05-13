@@ -12,8 +12,16 @@ type dataType=  {
 const fetchAllUser = (page:number )=> {
     return axios.get<dataType, any>(`api/users?page=${page}`)
 }
-    
-const loginApi = (email:any , password:any )=>{
-    return axios.post<dataType, any>("/api/login",{email,password})
+
+const fetchUser = ()=>{
+    return axios.get<dataType, any>("/api/Accounts")
 }
-export {fetchAllUser, loginApi}
+
+const loginApi = (email:string , password:string )=>{
+    return axios.get<dataType, any>(`/api/Accounts/${email}/${password}`)
+}
+
+const registerApi = (email: string, username: string, password: string, bio: string)=>{
+    return axios.post<dataType, any>("/api/Accounts", {email, username, password, bio})     
+}
+export {fetchAllUser, loginApi, registerApi}

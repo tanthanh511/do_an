@@ -19,7 +19,6 @@ export default function Blog() {
 
   const [dateTime, setDate] = useState("");
   const [dateResult, setDateResult] = useState(postsData);
-  console.log(dateTime);
 
   const [searchText, setSearchText] = useState("");
   const [searchResult, setSearchResult] = useState(postsData);

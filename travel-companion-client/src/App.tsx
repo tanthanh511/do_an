@@ -2,7 +2,6 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { ROUTE_NAME } from "./helpers/Route";
 import Home from "./pages/home";
-import PlaceDetail from "./pages/place-detail";
 import Blog from "./pages/blog";
 import Contact from "./pages/contact";
 import Header from "./layout/header";
@@ -16,22 +15,30 @@ import { useContext, useEffect } from "react";
 import PrivateRoute from "./components/privateRoute";
 import { BlogDetail } from "./pages/blog-detail";
 import { Weather } from "./pages/weather";
+import { UserDetail } from "./pages/user-detail";
+import WardDetail from "./pages/ward-detail";
+import PlaceDetail from "./pages/place-detail";
 
 function App() {
   const { user, loginContext } = useContext(UserContext)!;
-  // useEffect(()=>{
-  //   if(localStorage.getItem("token")){
-  //     loginContext(localStorage.getItem("email"), localStorage.getItem("token"))
-  //   }
-  // },[])
+
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const email = localStorage.getItem("email");
-      if (email) {
-        loginContext(email, token);
-      }
+    const password = localStorage.getItem("password");
+    const email = localStorage.getItem("email");
+    if (email && password) {
+      const { username, bio } = user;
+      loginContext(email, password, username, bio);
     }
+
+
+    // khi login bằng token
+    //const token = localStorage.getItem("token");
+    //if (token) {
+    // const email = localStorage.getItem("email");
+    // if (email) {
+    //   loginContext(email, token );
+    // }
+    //}
   }, []);
 
   return (
@@ -39,8 +46,10 @@ function App() {
       <Header />
       <Routes>
         <Route path={ROUTE_NAME.HOME} element={<Home />} />
+        <Route path={ROUTE_NAME.WARDDETAIL} element={<WardDetail />} />
         <Route path={ROUTE_NAME.PLACEDETAIL} element={<PlaceDetail />} />
         <Route path={ROUTE_NAME.BLOG} element={<Blog />} />
+        <Route path={ROUTE_NAME.USERDETAIL} element={<UserDetail />} />
         <Route path={ROUTE_NAME.CONTACT} element={<Contact />} />
         <Route path={ROUTE_NAME.WEATHER} element={<Weather />} />
         <Route path={ROUTE_NAME.BLOGDETAIL} element={<BlogDetail />} />

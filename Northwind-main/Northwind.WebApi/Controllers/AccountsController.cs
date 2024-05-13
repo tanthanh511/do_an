@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Northwind.WebApi.Repositories;
 using Northwind.Shared;
-using Northwind.WebApi.Authorization;
-using Northwind.WebApi.Models;
+using System.ComponentModel.DataAnnotations;
+//using Northwind.WebApi.Authorization;
+//using Northwind.WebApi.Models;
 
 namespace Northwind.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+//[Authorize]
 public class AccountsController : ControllerBase
 {
     
@@ -29,6 +30,41 @@ public class AccountsController : ControllerBase
     {
         return await repo.RetrieveAllAsync();
     }
+
+
+    //GET: api/accounts/[id]
+    [HttpGet("{id}", Name = nameof(GetAccounts))] // Named route
+    [ProducesResponseType(200, Type = typeof(Account))]
+    [ProducesResponseType(404)]
+    public async Task<IActionResult> GetAccount(string id)
+    {
+        Account? c = await repo.RetrieveAsync(id);
+
+        if (c == null)
+        {
+            return NotFound(); // 404 Resource not found
+        }
+
+        return Ok(c); // 200 OK with account in body
+    }
+
+    [HttpGet("{email}/{password}", Name = nameof(Login))] // Named route
+    [ProducesResponseType(200, Type = typeof(Account))]
+    [ProducesResponseType(404)]
+    public async Task<IActionResult> Login(string email, string password)
+    {
+        IEnumerable<Account?> listAccount = await repo.RetrieveAllAsync();
+
+        if (listAccount.FirstOrDefault(a=> a.Email== email) == null
+            || listAccount.FirstOrDefault(a => a.Password == password) == null)
+        {
+            return NotFound(); // 404 Resource not found
+        }
+
+        return Ok(listAccount.FirstOrDefault(a => a.Email == email)); // 200 OK with account in body
+    }
+
+
 
     // POST: api/accounts
     // BODY: Customer (JSON, XML)
@@ -57,21 +93,6 @@ public class AccountsController : ControllerBase
         }
     }
 
-    // GET: api/accounts/[id]
-    [HttpGet("{id}", Name = nameof(GetAccounts))] // Named route
-    [ProducesResponseType(200, Type = typeof(Account))]
-    [ProducesResponseType(404)]
-    public async Task<IActionResult> GetAccount(string id)
-    {
-        Account? c = await repo.RetrieveAsync(id);
-
-        if (c == null)
-        {
-            return NotFound(); // 404 Resource not found
-        }
-
-        return Ok(c); // 200 OK with customer in body
-    }
 
     // PUT: api/customers/[id]
     // BODY: Customer (JSON, XML)
@@ -137,17 +158,21 @@ public class AccountsController : ControllerBase
     }
 
 
-    [AllowAnonymous]
-    [HttpPost("authenticate")]
-    public IActionResult Authenticate(AuthenticateRequest model)
-    {
-        var response = repo.Authenticate(model);
 
-        if (response == null)
-            return BadRequest(new { message = "Username or password is incorrect" });
+    
+    // Đang lỗi 
+    //[AllowAnonymous]
+    //[HttpPost("authenticate")]
+    //public IActionResult Authenticate(AuthenticateRequest model)
+    //{
+    //    var response = repo.Authenticate(model);
 
-        return Ok(response);
-    }
+    //    if (response == null)
+    //        return BadRequest(new { message = "Username or password is incorrect" });
+
+    //    return Ok(response);
+    //}
+    
 
     //public async Task<IActionResult> Authenticate(AuthenticateRequest model)
     //{

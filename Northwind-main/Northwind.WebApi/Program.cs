@@ -9,33 +9,9 @@ using Microsoft.IdentityModel.Tokens;
 
 using static System.Console;
 using System.Text;
-using Northwind.WebApi.Authorization;
-using Northwind.WebApi.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls("https://localhost:5002/");
-//custumer token
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(options =>
-//    {
-//        options.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateIssuer = true,
-//            ValidateAudience = true,
-//            ValidateLifetime = true,
-//            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-//            ValidAudience = builder.Configuration["Jwt:Audience"],
-//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-//        };
-//    });
-
-// token
-// configure strongly typed settings object
-builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
-
-// configure DI for application services
-builder.Services.AddScoped<IJwtUtils, JwtUtils>();
-///
 
 
 
@@ -75,7 +51,7 @@ builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IWardRepository, WardRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IPlaceRepository, PlaceRepository>();
-builder.Services.AddScoped<ILoginRepository, LoginRepository>();
+//builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 
 
 builder.Services.AddHttpLogging(options =>
@@ -122,12 +98,12 @@ app.UseAuthentication();
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.UseHealthChecks(path: "/howdoyoufeel");
 
-app.UseMiddleware<JwtMiddleware>();
-//app.UseMiddleware<SecurityHeaders>();
+//app.UseMiddleware<JwtMiddleware>();
+app.UseMiddleware<SecurityHeaders>();
 
 app.MapControllers();
 
@@ -136,44 +112,3 @@ app.Run();
 
 
 
-//builder.WebHost.ConfigureKestrel(serverOptions =>
-//{
-//    serverOptions.Limits.MaxResponseBufferSize = null;
-//});
-//var cors = (builder.Configuration["Cors"] + "").Split(",").ToList().ToArray();
-//builder.Services.AddCors(p =>
-//{
-//    p.AddPolicy("T", b =>
-//    {
-//        b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-//    });
-//});
-
-//builder.Services.AddTravelCompanionContext();
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//            .AddJwtBearer(options =>
-//            {
-//                options.SaveToken = true;
-//                options.RequireHttpsMetadata = false;
-//                options.TokenValidationParameters = new TokenValidationParameters()
-//                {
-//                    ValidateIssuer = true,
-//                    ValidateAudience = true,
-//                    ValidAudience = builder.Configuration["JWTKey:ValidAudience"],
-//                    ValidIssuer = builder.Configuration["JWTKey:ValidIssuer"],
-//                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTKey:Secret"]))
-//                };
-//            });
-//var app = builder.Build();
-//app.UseSwagger();
-//app.UseSwaggerUI();
-//app.UseHttpsRedirection();
-
-//app.UseAuthentication();
-//app.UseAuthorization();
-
-//app.MapControllers();
-//app.UseCors("T");
-//app.Run();
